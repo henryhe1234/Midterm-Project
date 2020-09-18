@@ -6,8 +6,8 @@ module.exports = (db) => {
     console.log("hello");
     db.query(`SELECT * FROM todos;`)
       .then(data => {
-        const users = data.rows;
-        res.json({ users });
+        const todos = data.rows;
+        res.json({ todos });
       })
       .catch(err => {
         res
