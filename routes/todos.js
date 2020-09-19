@@ -6,8 +6,8 @@ module.exports = (db) => {
     db.query(`SELECT * FROM task_lists;`)
       .then(data => {
         console.log("hello Im working");
-        const todos = data.rows;
-        res.json({ todos });
+        const { templateVars } = data.rows;
+        res.render("todos", templateVars);
       })
       .catch(err => {
         res
