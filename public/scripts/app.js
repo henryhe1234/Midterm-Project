@@ -7,12 +7,5 @@ $(() => {
       $("<div>").text(user.name).appendTo($("body"));
     }
   });
-  $.ajax({
-    method: "GET",
-    url:"/api/todos"
-  }).done((todos) => {
-    for (const todo of todos) {
-      $("<h1>").text(todo).appendTo($("body"));
-    }
-  });
+
 });
