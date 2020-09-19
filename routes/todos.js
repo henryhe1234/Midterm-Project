@@ -3,9 +3,9 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    console.log("hello");
-    db.query(`SELECT * FROM todos;`)
+    db.query(`SELECT * FROM task_lists;`)
       .then(data => {
+        console.log("hello Im working");
         const todos = data.rows;
         res.json({ todos });
       })
