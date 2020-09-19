@@ -41,7 +41,7 @@ const todosRoutes = require("./routes/todos");
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use("/api/todos", todosRoutes(db));
+app.use("/todos", todosRoutes);
 // Note: mount other resources here, using the same pattern above
 
 
