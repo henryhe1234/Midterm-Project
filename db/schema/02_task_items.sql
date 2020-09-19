@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS task_items CASCADE;
 
 CREATE TABLE task_items(
   id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
   category VARCHAR(255) NOT NULL,
   scheduled_date DATE NOT NULL,
   completed_date DATE NOT NULL,
