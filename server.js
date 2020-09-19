@@ -34,8 +34,8 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
-const todosRoutes = require("./routes/todos");
 const widgetsRoutes = require("./routes/widgets");
+const todosRoutes = require("./routes/todos");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
