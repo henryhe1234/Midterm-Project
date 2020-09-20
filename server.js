@@ -38,15 +38,11 @@ const widgetsRoutes = require("./routes/widgets");
 
 // Todo Routes
 const todosRoutes = require("./routes/todos");
-const todoNewRoute = require("./routes/todos_new");
-const todoEditRoute = require("./routes/todo_edit");
-const todoDeleteRoute = require("./routes/todo_delete");
 
 
 // Login && Register Routes
 
 const login = require("./routes/login");
-const register = require("./routes/register");
 
 
 // Mount all resource routes
@@ -54,11 +50,7 @@ const register = require("./routes/register");
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/todos", todosRoutes);
-app.use("/todo/new", todoNewRoute);
-app.use("/todo/:id/edit", todoEditRoute);
-app.use("/todo/:id/delete", todoDeleteRoute);
 app.use("/login", login);
-app.use("/register", register);
 
 
 // Note: mount other resources here, using the same pattern above
