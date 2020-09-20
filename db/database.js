@@ -6,10 +6,6 @@ const pool = new Pool({
   database: 'midterm'
 });
 
-// DB_HOST=localhost
-// DB_USER=labber
-// DB_PASS=labber
-// DB_NAME=midterm
 const addUser = (user) => {
   return pool.query(`
   INSERT INTO users (
@@ -22,6 +18,8 @@ const addUser = (user) => {
       return res.rows[0];
     })
 };
+
+
 const addBooks = (user_id, title, create_on, scheduled_date, completed_date, book) => {
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
@@ -79,26 +77,13 @@ const getItemsListByUserId = (userId) => {
   })
 }
 
+module.exports = {
+  addUser,
+  addBooks,
+  addMovie,
+  addRestaurant,
+  addProduct,
+  getItemsListByUserId
+};
 
 
-
-let user1 = {
-  name: "Henry",
-  email: "abc@abc",
-  password: "1239494"
-}
-let product = "this is just a product";
-let books = "this is just a book";
-let movie = "this is just a movie";
-let restaurant = "this is just a restaurant";
-let create_on = "2019-12-31";
-let scheduled_date = "2020-08-19";
-let completed_date = "2020-03-18";
-// addProduct(product,scheduled_date,completed_date);
-// addRestaurant(restaurant, scheduled_date, completed_date);
-// addMovie(movie,scheduled_date,completed_date);
-// user_id,title,create_on, scheduled_date, completed_date,book
-
-addMovie(1, "some title", create_on, scheduled_date, completed_date, books);
-
-// addUser(user1);
