@@ -15,6 +15,7 @@ const addUser = (user) => {
     RETURNING *;
   `, [user.name, user.email, user.password])
     .then((res) => {
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -28,6 +29,7 @@ const addBooks = (user_id, title, create_on, scheduled_date, completed_date, boo
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, book])
     .then((res) => {
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -39,6 +41,7 @@ const addMovie = (user_id, title, create_on, scheduled_date, completed_date, mov
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, movie])
     .then((res) => {
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -48,8 +51,9 @@ const addRestaurant = (user_id, title, create_on, scheduled_date, completed_date
     category,scheduled_date,completed_date,info)
     VALUES($1,$2,$3,'restaurant',$4,$5,$6)
     RETURNING *;
-`, [user_id, title, create_on, scheduled_date, completed_date, movie])
+`, [user_id, title, create_on, scheduled_date, completed_date, restaurant])
     .then((res) => {
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -61,6 +65,7 @@ const addProduct = (user_id, title, create_on, scheduled_date, completed_date, p
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, product])
     .then((res) => {
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -69,13 +74,39 @@ const getItemsListByUserId = (userId) => {
   SELECT title,create_on,scheduled_date,completed_date,info
   FROM task_items
   JOIN users ON users.id = user_id
-  WHERE user_id = $1;
+  WHERE user_id = $1 AND is_active = true
+  ORDER BY scheduled_date;
 
   `,[userId])
     .then((res)=>{
-      return res.rows[0];
+      console.log(res.rows);
+      return res.rows;
     });
 };
+
+const editScheduled_dateByUserIdAndTitle = (newScheduled_date,user_id,title)=>{
+  return pool.query(`
+  UPDATE task_items
+  SET scheduled_date = $1
+  WHERE user_id = $2 AND title = $3
+  RETURNING *;
+  `,[newScheduled_date,user_id,title])
+  .then((res)=>{
+    return res.rows[0];
+  })
+};
+const editCompleted_dateByUserIdAndTitle = (newCompleted_date,user_id,title)=>{
+  return pool.query(`
+  UPDATE task_items
+  SET completed_date = $1
+  WHERE user_id = $2 AND title = $3
+  RETURNING *;
+  `,[newCompleted_date,user_id,title])
+  .then((res)=>{
+    return res.rows[0];
+  })
+}
+
 
 module.exports = {
   addUser,
@@ -83,7 +114,9 @@ module.exports = {
   addMovie,
   addRestaurant,
   addProduct,
-  getItemsListByUserId
+  getItemsListByUserId,
+  editScheduled_dateByUserIdAndTitle,
+  editCompleted_dateByUserIdAndTitle
 };
 
 
