@@ -13,12 +13,18 @@
 
   <body>
     <h1>TODOS</h1>
+    <form action="/todos/new" method="post">
+      <textarea name="new-todo" id="new-todo">
+        Write new Todo
+      </textarea>
+      <button type="submit">Submit</button>
+    </form>
     <ul>
       <li>
-        <h3>id: </h3><%= todo.id %>
+        <h3>id: <%= todo.id %></h3>
       </li>
       <li>
-        <h4>Title: </h4> <%= todo.title %>
+        <h4>Title:  <%= todo.title %></h4>
       </li>
     </ul>
   </body>

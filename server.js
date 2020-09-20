@@ -38,7 +38,7 @@ const widgetsRoutes = require("./routes/widgets");
 
 // Todo Routes
 const todosRoutes = require("./routes/todos");
-const todoNewRoute = require("./routes/todo_new");
+const todoNewRoute = require("./routes/todos_new");
 const todoEditRoute = require("./routes/todo_edit");
 const todoDeleteRoute = require("./routes/todo_delete");
 
