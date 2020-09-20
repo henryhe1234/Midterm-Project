@@ -16,7 +16,7 @@ const addUser = (user) => {
   `, [user.name, user.email, user.password])
     .then((res) => {
       return res.rows[0];
-    })
+    });
 };
 
 
@@ -29,8 +29,8 @@ const addBooks = (user_id, title, create_on, scheduled_date, completed_date, boo
 `, [user_id, title, create_on, scheduled_date, completed_date, book])
     .then((res) => {
       return res.rows[0];
-    })
-}
+    });
+};
 const addMovie = (user_id, title, create_on, scheduled_date, completed_date, movie) => {
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
@@ -40,7 +40,7 @@ const addMovie = (user_id, title, create_on, scheduled_date, completed_date, mov
 `, [user_id, title, create_on, scheduled_date, completed_date, movie])
     .then((res) => {
       return res.rows[0];
-    })
+    });
 };
 const addRestaurant = (user_id, title, create_on, scheduled_date, completed_date, restaurant) => {
   return pool.query(`
@@ -51,7 +51,7 @@ const addRestaurant = (user_id, title, create_on, scheduled_date, completed_date
 `, [user_id, title, create_on, scheduled_date, completed_date, movie])
     .then((res) => {
       return res.rows[0];
-    })
+    });
 };
 const addProduct = (user_id, title, create_on, scheduled_date, completed_date, product) => {
   return pool.query(`
@@ -62,7 +62,7 @@ const addProduct = (user_id, title, create_on, scheduled_date, completed_date, p
 `, [user_id, title, create_on, scheduled_date, completed_date, product])
     .then((res) => {
       return res.rows[0];
-    })
+    });
 };
 const getItemsListByUserId = (userId) => {
   return pool.query(`
@@ -72,10 +72,10 @@ const getItemsListByUserId = (userId) => {
   WHERE user_id = $1;
 
   `,[userId])
-  .then((res)=>{
-    return res.rows[0];
-  })
-}
+    .then((res)=>{
+      return res.rows[0];
+    });
+};
 
 module.exports = {
   addUser,
