@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 router.post("/", (req, res) => {
   const text = req.body["new-todo"];
-  console.log(text);
+  taskSort(text);
   res.redirect("/todos");
 });
 
