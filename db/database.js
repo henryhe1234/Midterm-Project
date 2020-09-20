@@ -22,50 +22,62 @@ const addUser = (user) => {
       return res.rows[0];
     })
 };
-const addBooks = (user_id,title,create_on, scheduled_date, completed_date,book) => {
+const addBooks = (user_id, title, create_on, scheduled_date, completed_date, book) => {
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
     category,scheduled_date,completed_date,info)
     VALUES($1,$2,$3,'book',$4,$5,$6)
     RETURNING *;
-`, [user_id,title,create_on,scheduled_date, completed_date,book])
+`, [user_id, title, create_on, scheduled_date, completed_date, book])
     .then((res) => {
       return res.rows[0];
     })
 }
-const addMovie = (user_id,title,create_on, scheduled_date, completed_date,movie) => {
+const addMovie = (user_id, title, create_on, scheduled_date, completed_date, movie) => {
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
     category,scheduled_date,completed_date,info)
-    VALUES($1,$2,$3,'book',$4,$5,$6)
+    VALUES($1,$2,$3,'movie',$4,$5,$6)
     RETURNING *;
-`, [user_id,title,create_on,scheduled_date, completed_date,movie])
+`, [user_id, title, create_on, scheduled_date, completed_date, movie])
     .then((res) => {
       return res.rows[0];
     })
 };
-const addRestaurant = (restaurant, scheduled_date, completed_date) => {
+const addRestaurant = (user_id, title, create_on, scheduled_date, completed_date, restaurant) => {
   return pool.query(`
-  INSERT INTO task_items (
-    info,category,scheduled_date,completed_date)
-    VALUES($1,'restaurant',$2,$3)
+  INSERT INTO task_items (user_id,title,create_on,
+    category,scheduled_date,completed_date,info)
+    VALUES($1,$2,$3,'restaurant',$4,$5,$6)
     RETURNING *;
-`, [restaurant, scheduled_date, completed_date])
+`, [user_id, title, create_on, scheduled_date, completed_date, movie])
     .then((res) => {
       return res.rows[0];
     })
 };
-const addProduct = (product, scheduled_date, completed_date) => {
+const addProduct = (user_id, title, create_on, scheduled_date, completed_date, product) => {
   return pool.query(`
-  INSERT INTO task_items (
-    info,category,scheduled_date,completed_date)
-    VALUES($1,'product',$2,$3)
+  INSERT INTO task_items (user_id,title,create_on,
+    category,scheduled_date,completed_date,info)
+    VALUES($1,$2,$3,'product',$4,$5,$6)
     RETURNING *;
-`, [product, scheduled_date, completed_date])
+`, [user_id, title, create_on, scheduled_date, completed_date, product])
     .then((res) => {
       return res.rows[0];
     })
 };
+const getItemsListByUserId = (userId) => {
+  return pool.query(`
+  SELECT title,create_on,scheduled_date,completed_date,info
+  FROM task_items
+  JOIN users ON users.id = user_id
+  WHERE user_id = $1;
+
+  `,[userId])
+  .then((res)=>{
+    return res.rows[0];
+  })
+}
 
 
 
@@ -87,6 +99,6 @@ let completed_date = "2020-03-18";
 // addMovie(movie,scheduled_date,completed_date);
 // user_id,title,create_on, scheduled_date, completed_date,book
 
-addMovie(1,"some title",create_on,scheduled_date,completed_date,books);
+addMovie(1, "some title", create_on, scheduled_date, completed_date, books);
 
 // addUser(user1);
