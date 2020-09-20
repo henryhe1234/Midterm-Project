@@ -105,6 +105,17 @@ const editCompleted_dateByUserIdAndTitle = (newCompleted_date,user_id,title)=>{
   .then((res)=>{
     return res.rows[0];
   })
+};
+const deleteTaskItemByUserIdAndTitle = (user_id,title)=>{
+  return pool.query(`
+  UPDATE task_items
+  SET is_active = false
+  WHERE user_id = $1 AND title = $2
+  RETURNING *;
+  `,[user_id,title])
+  .then((res)=>{
+    return res.rows[0];
+  })
 }
 
 
@@ -116,7 +127,8 @@ module.exports = {
   addProduct,
   getItemsListByUserId,
   editScheduled_dateByUserIdAndTitle,
-  editCompleted_dateByUserIdAndTitle
+  editCompleted_dateByUserIdAndTitle,
+  deleteTaskItemByUserIdAndTitle
 };
 
 
