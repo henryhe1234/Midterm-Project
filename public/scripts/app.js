@@ -1,3 +1,4 @@
+
 $(() => {
   $.ajax({
     method: "GET",
@@ -5,13 +6,18 @@ $(() => {
   }).done((users) => {
     console.log(users);
   });
-
-  $.ajax({
-    method: "GET",
-    url: "/todos"
-  }).done((todos) => {
-    console.log(todos);
-  });
+  const loadTodos = () => {
+    $.ajax({
+      method: "GET",
+      url: "/todos",
+      success: (data) => {
+        renderTodos(data);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  };
 
   const createNewTodo = (todo) => {
     const $todo = $('<div class="todo">');
@@ -24,12 +30,12 @@ $(() => {
   const renderTodos = (todos) => {
     const $todosDiv = $(".todos");
 
-    $todosDiv.epmty();
+    $todosDiv.empty();
 
     for (const id in todos) {
       const todo = todos[id];
       const $todo = createNewTodo(todo);
-      $todosDiv.prepend(todo);
+      $todosDiv.prepend($todo);
     }
   };
 });
