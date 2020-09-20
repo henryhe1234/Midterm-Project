@@ -13,3 +13,4 @@ CREATE TABLE task_items(
   is_active BOOLEAN NOT NULL DEFAULT TRUE
 
 );
+
