@@ -12,4 +12,8 @@ router.post("/", (req, res) => {
   res.redirect("/todos");
 });
 
+
+router.post("/:id/edit", (req, res) => {
+  res.redirect("/todos");
+});
 module.exports = router;
