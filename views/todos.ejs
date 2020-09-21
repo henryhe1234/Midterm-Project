@@ -30,10 +30,10 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">Title</th>
-          <th scope="col">Description</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Edit</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -41,12 +41,12 @@
             <td>Some Title</td>
             <td>Some Description</td>
             <td>
-              <form action="/todos/edit" method="POST">
-              <button class="btn btn-outline-primary">edit</button>
+              <form action="/todos/:id/edit" method="POST">
+              <button>edit</button>
               </form>
             </td>
             <td>
-              <form method="POST" action="/todos/delete">
+              <form method="POST" action="/todos/:id/delete">
                 <button > Delete</button>
               </form>
             </td>
