@@ -18,8 +18,8 @@
       <h1>TODOS</h1>
     </nav>
     <div class="new-todo">
-      <form action="/todos" method="post">
-        <textarea name="new-todo" id="new-todo" placeholder="Write new Todo"></textarea>
+      <form action="/todos/new" method="post">
+        <input name="new-todo" placeholder="Write new Todo"></input>
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -37,8 +37,9 @@
         </tr>
       </thead>
       <tbody>
+        <% for(const todo of todos){ %>
           <tr>
-            <td>Some Title</td>
+            <td><%=todo.title %></td>
             <td>Some Description</td>
             <td>
               <form action="/todos/:id/edit" method="POST">
@@ -51,6 +52,7 @@
               </form>
             </td>
           </tr>
+        <% } %>
       </tbody>
     </table>
   </main>
