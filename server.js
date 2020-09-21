@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
+const cookieSession = require("cookie-session");
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -30,6 +31,13 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+
+//cookiesession for user authentication
+app.use(cookieSession({
+  name: 'session',
+  keys: ['I am the very model of a scientist salarian', "I've studies species Turian, Asari, and Batarian", "I'm quite good at genetics(as a subset of biology)", "because I am a expert (which I know is a tautology)"]
+}));
+
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -61,6 +69,12 @@ app.use("/login", login);
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+//for to be implemented loguot button. Wipes cookie.
+app.post("/logout", (req, res) => {
+  req.session = null;
+  res.redirect("/");
 });
 
 app.listen(PORT, () => {
