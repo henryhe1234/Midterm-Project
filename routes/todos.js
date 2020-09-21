@@ -5,7 +5,6 @@ const taskSort = require("../lib/taskSort");
 const fakeTodos = require("./fake_data/in_memory_db");
 router.get("/", (req, res) => {
   const templateVars = fakeTodos;
-  console.log();
   res.render("todos", templateVars);
 });
 
@@ -21,7 +20,7 @@ router.post("/new", (req, res) => {
   const userId = Math.random();
   const title = req.body["new-todo"];
   const createdOn = new Date();
-  const category = taskSort();
+  const category = taskSort(title);
   const scheduledDate = new Date();
   const info = "some info on " + title;
   const newTodo = {
@@ -32,7 +31,7 @@ router.post("/new", (req, res) => {
     scheduledDate: scheduledDate,
     info: info
   };
-  fakeTodos.push(newTodo);
+  fakeTodos.todos.push(newTodo);
   res.redirect("/todos");
 });
 
