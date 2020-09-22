@@ -35,8 +35,9 @@ app.use(express.static("public"));
 //cookiesession for user authentication
 app.use(cookieSession({
   name: 'session',
-  keys: ['I am the very model of a scientist salarian', "I've studies species Turian, Asari, and Batarian", "I'm quite good at genetics(as a subset of biology)", "because I am a expert (which I know is a tautology)"]
+  keys: 'I am the very model of a scientist salarias a subset of biology)", "because I am a expert (which I know is a tautology)'
 }));
+
 
 
 // Separated Routes for each Resource
@@ -44,8 +45,13 @@ app.use(cookieSession({
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 
+// Fake Data handling
+const fakeDB = require("./routes/fake_data/in_memory_db");
+const dataHelpers = require("./routes/fake_data/DataHelpers")(fakeDB);
+
 // Todo Routes
-const todosRoutes = require("./routes/todos");
+
+const todosRoutes = require("./routes/todos")(dataHelpers);
 
 
 // Login && Register Routes
@@ -58,6 +64,11 @@ const login = require("./routes/login");
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/todos", todosRoutes);
+app.post("/todos/", (req, res) => {
+  res.statusCode(200);
+});
+
+
 app.use("/login", login);
 
 

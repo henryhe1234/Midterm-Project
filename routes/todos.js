@@ -1,45 +1,54 @@
+const { json } = require('body-parser');
+const { Template } = require('ejs');
 const express = require('express');
 const router  = express.Router();
 
 const taskSort = require("../lib/taskSort");
-const fakeTodos = require("./fake_data/in_memory_db");
-router.get("/", (req, res) => {
-  const templateVars = fakeTodos;
-  res.render("todos", templateVars);
-});
 
-//not sure we need a post Here
-router.post("/", (req, res) => {
-  const text = req.body["new-todo"];
-  taskSort(text);
-  res.redirect("/todos");
-});
+module.exports = (DataHelpers) => {
 
-//this creates all the needed info for the frontend
-router.post("/new", (req, res) => {
-  const userId = Math.random();
-  const title = req.body["new-todo"];
-  const createdOn = new Date();
-  const category = taskSort(title);
-  const scheduledDate = new Date();
-  const info = "some info on " + title;
-  const newTodo = {
-    userId: userId,
-    title: title,
-    createdOn: createdOn,
-    category: category,
-    scheduledDate: scheduledDate,
-    info: info
-  };
-  fakeTodos.todos.push(newTodo);
-  res.redirect("/todos");
-});
+  router.get("/", (req, res) => {
+    DataHelpers.getTodos((err, todos) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        const templateVars = { todos: todos
+        };
+        res.render("todos", templateVars);
+      }
+    });
+  });
 
-router.post("/:id/edit", (req, res) => {
-  res.redirect("/todos");
-});
 
-router.post("/:id/delete", (req, res) => {
-  res.redirect("/todos");
-});
-module.exports = router;
+  router.post("/", (req, res) => {
+    const userId = Math.random();
+    const title = req.body["new-todo"];
+    const createdOn = Date.now();
+    const category = taskSort(title);
+    const scheduledDate = new Date();
+    const info = "some info on " + title;
+    const newTodo = {
+      userId: userId,
+      title: title,
+      createdOn: createdOn,
+      category: category,
+      scheduledDate: scheduledDate,
+      info: info
+    };
+    DataHelpers.saveTodos(newTodo, (err) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        res.status(201).send();
+      }
+    });
+  });
+  // router.post("/:id/edit", (req, res) => {
+  //   res.redirect("/todos");
+  // });
+
+  // router.post("/:id/delete", (req, res) => {
+  //   res.redirect("/todos");
+  // });
+  return router;
+};
