@@ -15,7 +15,7 @@ let movie = 'this is a movie';
 let product = 'this is a product';
 let restaurant = 'this is a restaurant';
 // addUser(user);
-addRestaurant(user_id,title,create_on,scheduled_date,completed_date,restaurant);
+// addRestaurant(user_id,title,create_on,scheduled_date,completed_date,restaurant);
 // getItemsListByUserId(user_id);
 // editScheduled_dateByUserId('2020-09-20',1,'winter break task');
 // deleteTaskItemByUserIdAndTitle(user_id,title);
