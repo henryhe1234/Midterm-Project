@@ -1,21 +1,6 @@
 // require('dotenv').config();
 const pool = require('./dbsetup');
 
-// const { Pool, Query } = require('pg');
-
-// const dbParams = require('../lib/db.js');
-
-// // const pool = new Pool({
-// //   // user: 'labber',
-// //   // password: 'labber',
-// //   // host: 'localhost',
-// //   // database: 'midterm'
-// // });
-// const pool = new Pool(dbParams);
-// pool.connect(()=>{
-//   console.log("connected to database");
-// });
-
 const addUser = (user) => {
   return pool.query(`
   INSERT INTO users (
@@ -30,7 +15,6 @@ const addUser = (user) => {
     });
 };
 
-
 const addBooks = (user_id, title, create_on, scheduled_date, completed_date, book) => {
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
@@ -43,6 +27,7 @@ const addBooks = (user_id, title, create_on, scheduled_date, completed_date, boo
       return res.rows[0];
     });
 };
+
 const addMovie = (user_id, title, create_on, scheduled_date, completed_date, movie) => {
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
@@ -55,6 +40,7 @@ const addMovie = (user_id, title, create_on, scheduled_date, completed_date, mov
       return res.rows[0];
     });
 };
+
 const addRestaurant = (user_id, title, create_on, scheduled_date, completed_date, restaurant) => {
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
@@ -67,6 +53,7 @@ const addRestaurant = (user_id, title, create_on, scheduled_date, completed_date
       return res.rows[0];
     });
 };
+
 const addProduct = (user_id, title, create_on, scheduled_date, completed_date, product) => {
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
@@ -79,6 +66,7 @@ const addProduct = (user_id, title, create_on, scheduled_date, completed_date, p
       return res.rows[0];
     });
 };
+
 const getItemsListByUserId = (userId) => {
   return pool.query(`
   SELECT title,create_on,scheduled_date,completed_date,info
@@ -105,6 +93,7 @@ const editScheduled_dateByUserIdAndTitle = (newScheduled_date,user_id,title)=>{
       return res.rows[0];
     });
 };
+
 const editCompleted_dateByUserIdAndTitle = (newCompleted_date,user_id,title)=>{
   return pool.query(`
   UPDATE task_items
@@ -116,6 +105,7 @@ const editCompleted_dateByUserIdAndTitle = (newCompleted_date,user_id,title)=>{
       return res.rows[0];
     });
 };
+
 const deleteTaskItemByUserIdAndTitle = (user_id,title)=>{
   return pool.query(`
   UPDATE task_items
@@ -127,7 +117,6 @@ const deleteTaskItemByUserIdAndTitle = (user_id,title)=>{
       return res.rows[0];
     });
 };
-
 
 module.exports = {
   addUser,
