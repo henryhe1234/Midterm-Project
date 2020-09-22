@@ -7,17 +7,20 @@ const taskSort = require("../lib/taskSort");
 
 
 
-module.exports = (DataHelpers) => {
+// module.exports = (DataHelpers) => {
 
 router.get("/", (req, res) => {
-  DataHelpers.getTodos((err, todos) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
-      const templateVars = { todos: todos };
-      res.render("todos", templateVars);
-    }
-  });
+
+  let user_id = req.session.id;
+  getItemsListByUserId(user_id)
+  .then((todos)=>{
+    console.log(todos);
+    const templateVars = { todos: todos };
+    res.render('todos',templateVars);
+  })
+
+
+
 });
 
 
@@ -52,5 +55,5 @@ router.post("/new", (req, res) => {
 // router.post("/:id/delete", (req, res) => {
 //   res.redirect("/todos");
 // });
-return router;
-};
+module.exports = router;
+// };
