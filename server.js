@@ -12,10 +12,11 @@ const morgan     = require('morgan');
 const cookieSession = require("cookie-session");
 
 // PG database client/connection setup
-const { Pool } = require('pg');
-const dbParams = require('./lib/db.js');
-const db = new Pool(dbParams);
-db.connect();
+const {addRestaurant} = require('./db/database');
+// const { Pool } = require('pg');
+// const dbParams = require('./lib/db.js');
+// const db = new Pool(dbParams);
+// db.connect();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -52,6 +53,8 @@ const dataHelpers = require("./routes/fake_data/DataHelpers")(fakeDB);
 // Todo Routes
 
 const todosRoutes = require("./routes/todos")(dataHelpers);
+// const todosRoutes = require("./routes/todos");
+
 
 
 // Login && Register Routes
@@ -61,8 +64,8 @@ const login = require("./routes/login");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
+// app.use("/api/users", usersRoutes(db));
+// app.use("/api/widgets", widgetsRoutes(db));
 app.use("/todos", todosRoutes);
 app.post("/todos/", (req, res) => {
   res.statusCode(200);
@@ -79,7 +82,11 @@ app.use("/login", login);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  res.render("index");
+  addRestaurant(1,'random','2020-08-02','2020-08-03','2020-09-03','restaurant')
+  .then((info)=>{
+    res.json(info);
+  });
+  // res.render("index");
 });
 
 //for to be implemented loguot button. Wipes cookie.

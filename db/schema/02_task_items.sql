@@ -6,8 +6,8 @@ CREATE TABLE task_items(
   title VARCHAR(255) NOT NULL,
   create_on DATE NOT NULL,
   category VARCHAR(255) NOT NULL,
-  scheduled_date DATE NOT NULL,
-  completed_date DATE NOT NULL,
+  scheduled_date DATE,
+  completed_date DATE,
 
   info TEXT NOT NULL,
   is_active BOOLEAN NOT NULL DEFAULT TRUE
