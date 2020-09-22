@@ -36,7 +36,7 @@ app.use(express.static("public"));
 //cookiesession for user authentication
 app.use(cookieSession({
   name: 'session',
-  keys: 'I am the very model of a scientist salarias a subset of biology)", "because I am a expert (which I know is a tautology)'
+  keys: ['I am the very model of a scientist salarias a subset of biology)", "because I am a expert (which I know is a tautology)']
 }));
 
 
@@ -47,13 +47,13 @@ const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 
 // Fake Data handling
-const fakeDB = require("./routes/fake_data/in_memory_db");
-const dataHelpers = require("./routes/fake_data/DataHelpers")(fakeDB);
+// const fakeDB = require("./routes/fake_data/in_memory_db");
+// const dataHelpers = require("./routes/fake_data/DataHelpers")(fakeDB);
 
 // Todo Routes
 
-const todosRoutes = require("./routes/todos")(dataHelpers);
-// const todosRoutes = require("./routes/todos");
+// const todosRoutes = require("./routes/todos")(dataHelpers);
+const todosRoutes = require("./routes/todos");
 
 
 
@@ -82,11 +82,8 @@ app.use("/login", login);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  addRestaurant(1,'random','2020-08-02','2020-08-03','2020-09-03','restaurant')
-  .then((info)=>{
-    res.json(info);
-  });
-  // res.render("index");
+
+  res.render("index");
 });
 
 //for to be implemented loguot button. Wipes cookie.
