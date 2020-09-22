@@ -47,9 +47,9 @@
   <main>
 
     <div class="landing">
-      <form id="new-todo">
-        <label for="new-todo">What do you have to do?</label>
-        <input type="text" class="form-control" id="new-todo">
+      <form action="/todos/new" method ="POST" id= "new-todo">
+        <label>What do you have to do?</label>
+        <input type="text" class="form-control" name="new-todo">
         <button type="submit" class="btn btn-light">Submit</button>
       </form>
     </div>
@@ -67,7 +67,7 @@
           </tr>
         </thead>
         <tbody>
-            <tr id="todos">
+            <!-- <tr id="todos">
               <% for(const todo in todos) { %>
                 <td class="movie">
                   <% if ( todos[todo].category === "movie" ) { %>
@@ -90,7 +90,17 @@
                       <% } %>
                     </td>
                 <% } %>
-              </tr>
+              </tr> -->
+              <% todos.forEach((entry) => { %>
+                <tr>
+                  <td>
+                    <%= entry.title %>
+                  </td>
+                  <td>
+                    <%= entry.info %>
+                  </td>
+                </tr>
+              <%}) %>
         </tbody>
       </table>
     </div>
