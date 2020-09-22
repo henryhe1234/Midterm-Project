@@ -21,80 +21,91 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Smart Todo</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Smart Todo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Sort By
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Watch</a>
-              <a class="dropdown-item" href="#">Eat</a>
-              <a class="dropdown-item" href="#">Read</a>
-              <a class="dropdown-item" href="#">Buy</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-  <main>
-
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Watch</a>
+                <a class="dropdown-item" href="#">Eat</a>
+                <a class="dropdown-item" href="#">Read</a>
+                <a class="dropdown-item" href="#">Buy</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
     <div class="landing">
-      <form id="new-todo">
-        <label for="new-todo">What do you have to do?</label>
-        <input type="text" class="form-control" id="new-todo">
-        <button type="submit" class="btn btn-light">Submit</button>
-      </form>
+      <div class="content">
+        <div class="title">
+          Smart Todo List
+        </div>
+        <div class="text">
+          <form action="/todos/new" method ="POST" id= "new-todo">
+            <label>What do you have to do?</label>
+            <input type="text" class="form-control" name="new-todo">
+            <button type="submit" class="btn btn-light">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
-  </main>
-
-
-    <div class="todos-container">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Watch</th>
-            <th scope="col">Eat</th>
-            <th scope="col">Read</th>
-            <th scope="col">Buy</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr id="todos">
-              <% for(const todo in todos) { %>
-                <td class="movie">
-                  <% if ( todos[todo].category === "movie" ) { %>
-                    <%= todos[todo].title %>
-                    <% } %>
-                  </td>
-                  <td class="food">
-                    <% if ( todos[todo].category === "food" ) { %>
-                      <%= todos[todo].title %>
-                      <% } %>
-                  </td>
-                  <td class="book">
-                    <% if ( todos[todo].category === "book" ) { %>
-                    <%= todos[todo].title %>
-                      <% } %>
-                    </td>
-                    <td class="product">
-                      <% if ( todos[todo].category === "book" ) { %>
-                        <%= todos[todo].title %>
-                      <% } %>
-                    </td>
+        <section class="container">
+          <div class="container grid-4">
+            <div class="movie">
+              <h3>Watch</h3>
+              <% todos.forEach((entry) => { %>
+                <% if(entry.category=== "movie") { %>
+                  <p>
+                    <%= entry.title %>
+                  </p>
+                  <br>
                 <% } %>
-              </tr>
-        </tbody>
-      </table>
-    </div>
+              <% }) %>
+            </div>
+            <div class="food">
+              <h3>Eat</h3>
+                <% todos.forEach((entry) => { %>
+                  <% if(entry.category=== "food") { %>
+                  <p>
+                    <%= entry.title %>
+                  </p>
+                  <br>
+                <% } %>
+              <% }) %>
+            </div>
+            <div class="book">
+              <h3>Read</h3>
+              <% todos.forEach((entry) => { %>
+                <% if(entry.category=== "book") { %>
+                  <p>
+                    <%= entry.title %>
+                  </p>
+                  <br>
+                <% } %>
+              <% }) %>
+            </div>
+            <div class="product">
+              <h3>Buy</h3>
+              <% todos.forEach((entry) => { %>
+                <% if(entry.category=== "product") { %>
+                  <p>
+                    <%= entry.title %>
+                  </p> <br>
+                <% } %>
+              <% }) %>
+            </div>
+          </div>
+        </section>
     <script src="../public/scripts/app.js"></script>
   </body>
-
 </html>
