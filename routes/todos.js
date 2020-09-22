@@ -12,15 +12,14 @@ module.exports = (DataHelpers) => {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        const templateVars = { todos: todos
-        };
+        const templateVars = { todos: todos };
         res.render("todos", templateVars);
       }
     });
   });
 
 
-  router.post("/", (req, res) => {
+  router.post("/new", (req, res) => {
     const userId = Math.random();
     const title = req.body["new-todo"];
     const createdOn = Date.now();
@@ -35,11 +34,11 @@ module.exports = (DataHelpers) => {
       scheduledDate: scheduledDate,
       info: info
     };
-    DataHelpers.saveTodos(newTodo, (err) => {
+    DataHelpers.saveTodo(newTodo, (err) => {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        res.status(201).send();
+        res.redirect("/todos");
       }
     });
   });
