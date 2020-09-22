@@ -91,9 +91,9 @@ const editScheduled_dateByUserIdAndTitle = (newScheduled_date,user_id,title)=>{
   WHERE user_id = $2 AND title = $3
   RETURNING *;
   `,[newScheduled_date,user_id,title])
-  .then((res)=>{
-    return res.rows[0];
-  })
+    .then((res)=>{
+      return res.rows[0];
+    });
 };
 const editCompleted_dateByUserIdAndTitle = (newCompleted_date,user_id,title)=>{
   return pool.query(`
@@ -102,9 +102,9 @@ const editCompleted_dateByUserIdAndTitle = (newCompleted_date,user_id,title)=>{
   WHERE user_id = $2 AND title = $3
   RETURNING *;
   `,[newCompleted_date,user_id,title])
-  .then((res)=>{
-    return res.rows[0];
-  })
+    .then((res)=>{
+      return res.rows[0];
+    });
 };
 const deleteTaskItemByUserIdAndTitle = (user_id,title)=>{
   return pool.query(`
@@ -113,10 +113,10 @@ const deleteTaskItemByUserIdAndTitle = (user_id,title)=>{
   WHERE user_id = $1 AND title = $2
   RETURNING *;
   `,[user_id,title])
-  .then((res)=>{
-    return res.rows[0];
-  })
-}
+    .then((res)=>{
+      return res.rows[0];
+    });
+};
 
 
 module.exports = {
