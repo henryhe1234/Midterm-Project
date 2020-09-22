@@ -36,7 +36,7 @@ app.use(express.static("public"));
 //cookiesession for user authentication
 app.use(cookieSession({
   name: 'session',
-  keys: ['I am the very model of a scientist salarias a subset of biology)", "because I am a expert (which I know is a tautology)']
+  keys: ['I am the very model of a scientist salarian', "I've studied species Turian, Asari, and Batarian", "I've mastered genetics(as a subset of biology)", "because I am a expert (which I know is a tautology)"]
 }));
 
 
@@ -48,45 +48,37 @@ const widgetsRoutes = require("./routes/widgets");
 
 // Fake Data handling
 // const fakeDB = require("./routes/fake_data/in_memory_db");
-// const dataHelpers = require("./routes/fake_data/DataHelpers")(fakeDB);
+// const dataHelpers = require("./routes/fake_data/DataHelpers");
 
 // Todo Routes
 
-// const todosRoutes = require("./routes/todos")(dataHelpers);
 const todosRoutes = require("./routes/todos");
-
-
 
 // Login && Register Routes
 
 const login = require("./routes/login");
 
-
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
+// app.use("/todos", todosRoutes(db));
 app.use("/todos", todosRoutes);
-app.post("/todos/", (req, res) => {
-  res.statusCode(200);
-});
-
-
 app.use("/login", login);
-
-
-// Note: mount other resources here, using the same pattern above
 
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-
+  // addRestaurant(1,'random','2020-08-02','2020-08-03','2020-09-03','restaurant')
+  // .then((info)=>{
+  //   res.json(info);
+  // });
   res.render("index");
 });
 
-//for to be implemented loguot button. Wipes cookie.
+//for to be implemented logout button. Wipes cookie.
 app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");

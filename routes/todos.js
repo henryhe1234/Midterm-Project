@@ -4,56 +4,47 @@ const express = require('express');
 const router = express.Router();
 const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUserId, editScheduled_dateByUserIdAndTitle, editCompleted_dateByUserIdAndTitle, deleteTaskItemByUserIdAndTitle } = require("../db/database");
 const taskSort = require("../lib/taskSort");
-
-
-
-// module.exports = (DataHelpers) => {
+const db = require('../db/dbsetup')
 
 router.get("/", (req, res) => {
 
   let user_id = req.session.id;
   getItemsListByUserId(user_id)
-  .then((todos)=>{
-    console.log(todos);
-    const templateVars = { todos: todos };
-    res.render('todos',templateVars);
-  })
-
-
-
+    .then((todos) => {
+      console.log(todos);
+      const templateVars = { todos: todos };
+      res.render('todos', templateVars);
+    })
 });
 
-
-router.post("/new", (req, res) => {
-  //const restaurant info = tasksort(req.body.textfield,req.seesion.id);
-  const title = req.body["new-todo"];
-  const createdOn = Date.now();
-  const category = taskSort(title);
-  const scheduledDate = new Date();
-  const info = "some info on " + title;
-
-  const newTodo = {
-    userId: userId,
-    title: title,
-    createdOn: createdOn,
-    category: category,
-    scheduledDate: scheduledDate,
-    info: info
-  };
-  DataHelpers.saveTodo(newTodo, (err) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.redirect("/todos");
-    }
-  });
+router.get("/list", (req, res) => {
+  let query = `SELECT * FROM task_items`;
+  console.log(query);
+  db.query(query)
+    .then(data => {
+      const widgets = data.rows;
+      res.json({ widgets });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
-// router.post("/:id/edit", (req, res) => {
-//   res.redirect("/todos");
-// });
+
+router.post("/", function (req, res) {
+  console.log("REQ:\n", req.body["new-todo"])
+  if (!req.body["new-todo"]) {
+    res.status(400).json({ error: 'invalid request: no data in POST body' });
+    return;
+  }
+  taskSort(req.body["new-todo"], req.session.id)
+  //console.log(req.body)
+  res.redirect("/")
+});
 
 // router.post("/:id/delete", (req, res) => {
 //   res.redirect("/todos");
 // });
 module.exports = router;
-// };
+
