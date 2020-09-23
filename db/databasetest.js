@@ -1,4 +1,4 @@
-const {addBooks,addMovie,addProduct,addRestaurant,addUser,getItemsListByUserId,editScheduled_dateByUserIdAndTitle,editCompleted_dateByUserIdAndTitle,deleteTaskItemByUserIdAndTitle} = require("./database");
+const {addBooks,addMovie,addProduct,addRestaurant,addUser,getItemsListByUserId,editScheduled_dateByUserIdAndTitle,editCompleted_dateByUserIdAndTitle,deleteTaskItemByUserIdAndTitle,changeCatagoryByUserIdAndTitle} = require("./database");
 
 let user = {
   name:'name',
@@ -14,6 +14,7 @@ let book = 'this is a book';
 let movie = 'this is a movie';
 let product = 'this is a product';
 let restaurant = 'this is a restaurant';
+// changeCatagoryByUserIdAndTitle(2,'Harry Potter','product');
 // addUser(user);
 // addRestaurant(user_id,title,create_on,scheduled_date,completed_date,restaurant);
 // getItemsListByUserId(user_id);

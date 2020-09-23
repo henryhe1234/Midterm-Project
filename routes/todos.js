@@ -2,13 +2,15 @@
 // const { Template } = require('ejs');
 const express = require('express');
 const router = express.Router();
-const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUserId, editScheduled_dateByUserIdAndTitle, editCompleted_dateByUserIdAndTitle, deleteTaskItemByUserIdAndTitle } = require("../db/database");
+const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUserId, editScheduled_dateByUserIdAndTitle, editCompleted_dateByUserIdAndTitle, deleteTaskItemByUserIdAndTitle,changeCatagoryByUserIdAndTitle } = require("../db/database");
 const taskSort = require("../lib/taskSort");
-const db = require('../db/dbsetup')
+// const db = require('../db/dbsetup')
 
 router.get("/", (req, res) => {
 
-  let user_id = req.session.id;
+  // let user_id = req.session.id;
+  let user_id = 2;
+
   getItemsListByUserId(user_id)
     .then((todos) => {
       console.log(todos);
@@ -16,6 +18,14 @@ router.get("/", (req, res) => {
       res.render('todos', templateVars);
     })
 });
+
+// router.get("/test",(req,res)=>{
+//   changeCatagoryByUserIdAndTitle(2,'Harry Potter','movie')
+//   .then((obj)=>{
+//     res.json(obj);
+//   })
+
+// })
 
 router.get("/list", (req, res) => {
   let query = `SELECT * FROM task_items`;

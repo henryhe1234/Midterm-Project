@@ -1,5 +1,9 @@
 // require('dotenv').config();
 const pool = require('./dbsetup');
+const { movieQuery } = require('../lib/movie_queries');
+const { bookQuery } = require('../lib/book_queries');
+const { restaurantQuery } = require('../lib/yelp_queries');
+
 
 const addUser = (user) => {
   return pool.query(`
@@ -118,6 +122,62 @@ const deleteTaskItemByUserIdAndTitle = (user_id,title)=>{
     });
 };
 
+const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
+  if(newCatagory === 'book'){
+    return bookQuery(title)
+    .then((res)=>{
+    return pool.query(`
+    UPDATE task_items
+    SET category = 'book'
+        ,info = $1
+    WHERE user_id = $2 AND title = $3
+    RETURNING *;
+    `,[res,user_id,title])
+    })
+    .then((res)=>{
+      return res.rows[0];
+    })
+  }else if(newCatagory === 'restaurant'){
+    return restaurantQuery(title)
+    .then((res)=>{
+    return pool.query(`
+    UPDATE task_items
+    SET category = 'restaurant'
+        ,info = $1
+    WHERE user_id = $2 AND title = $3
+    RETURNING *;
+    `,[res,user_id,title])
+    })
+    .then((res)=>{
+      return res.rows[0];
+    })
+  }else if(newCatagory === 'movie'){
+    return movieQuery(title)
+    .then((res)=>{
+      return pool.query(`
+      UPDATE task_items
+      SET category = 'movie'
+          ,info = $1
+      WHERE user_id = $2 AND title = $3
+      RETURNING *;
+      `,[res,user_id,title])
+      })
+      .then((res)=>{
+        return res.rows[0];
+      })
+  }else{
+    return pool.query(`
+    UPDATE task_items
+    SET category = 'product'
+    WHERE user_id = $1 AND title = $2
+    RETURNING *;
+    `,[user_id,title])
+    .then((res)=>{
+      return res.rows[0];
+    })
+  }
+}
+
 module.exports = {
   addUser,
   addBooks,
@@ -127,7 +187,8 @@ module.exports = {
   getItemsListByUserId,
   editScheduled_dateByUserIdAndTitle,
   editCompleted_dateByUserIdAndTitle,
-  deleteTaskItemByUserIdAndTitle
+  deleteTaskItemByUserIdAndTitle,
+  changeCatagoryByUserIdAndTitle
 };
 
 
