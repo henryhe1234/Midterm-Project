@@ -58,6 +58,8 @@ const todosRoutes = require("./routes/todos");
 
 const login = require("./routes/login");
 
+const registry = require("./routes/registry");
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
@@ -65,6 +67,7 @@ const login = require("./routes/login");
 // app.use("/todos", todosRoutes(db));
 app.use("/todos", todosRoutes);
 app.use("/login", login);
+app.use("/registry",registry);
 
 
 // Home page
