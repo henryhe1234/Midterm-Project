@@ -23,7 +23,6 @@ const {addRestaurant} = require('./db/database');
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
 
-app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
@@ -73,13 +72,14 @@ app.use("/registry",registry);
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-app.get("/", (req, res) => {
-  // addRestaurant(1,'random','2020-08-02','2020-08-03','2020-09-03','restaurant')
-  // .then((info)=>{
-  //   res.json(info);
-  // });
-  res.render("index");
-});
+// app.get("/", (req, res) => {
+//   // addRestaurant(1,'random','2020-08-02','2020-08-03','2020-09-03','restaurant')
+//   // .then((info)=>{
+//   //   res.json(info);
+//   // });
+//   // res.render("index");
+
+// });
 
 //for to be implemented logout button. Wipes cookie.
 app.post("/logout", (req, res) => {
