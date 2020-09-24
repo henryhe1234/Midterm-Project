@@ -27,26 +27,50 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Smart Todo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
+          <span> </span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 Sort By
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Watch</a>
-              <a class="dropdown-item" href="#">Eat</a>
-              <a class="dropdown-item" href="#">Read</a>
-              <a class="dropdown-item" href="#">Buy</a>
-            </div>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Watch</a>
+                <a class="dropdown-item" href="#">Eat</a>
+                <a class="dropdown-item" href="#">Read</a>
+                <a class="dropdown-item" href="#">Buy</a>
+              </div>
+            </li>
+          </ul>
+          <span id = "nameanchor">
+          </span>
+          <li id="loginform" class="navbar-nav nav-item">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true">Login</a>
+            <ul class="dropdown-menu dropdown-menu-right form-wrapper">
+              <li>
+                <form action="/login" method="POST">
+                  <div class="form-group">
+                    <label for="username"></label>
+                    <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password">
+                  </div>
+                  <input type="submit" class="btn btn-primary btn-block" value="Login">
+                </form>
+              </li>
+            </ul>
           </li>
-        </ul>
-      </div>
-      </nav>
+          <form method="POST" action="/logout">
+            <button id='logoutbtn' class="btn-logout btn btn-primary" type="submit">Logout</button>
+          </form>
+        </nav>
     </header>
     <div class="landing">
       <div class="content">
