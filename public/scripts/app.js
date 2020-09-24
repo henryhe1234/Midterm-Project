@@ -70,6 +70,12 @@ $(() => {
   //       console.log("HERERES:", res);
   //     });
   // });
+  $('#loginform').on('submit', function(event){
+    event.preventDefault();
+    $(this).css("display","none")
+    $('#navbarSupportedContent > form').css("display", "block")
+  })
+
   loadTodos();
 });
 
