@@ -8,21 +8,12 @@ const db = require('../db/dbsetup');
 
 
 router.get("/", (req, res) => {
-
   const user_id = req.session.id;
   getItemsListByUserId(user_id)
     .then((todos) => {
       res.json(todos);
     });
 });
-
-// router.get("/test",(req,res)=>{
-//   changeCatagoryByUserIdAndTitle(2,'Harry Potter','movie')
-//   .then((obj)=>{
-//     res.json(obj);
-//   })
-
-// })
 
 router.get("/list", (req, res) => {
   let query = `SELECT * FROM s`;
@@ -51,12 +42,7 @@ router.post("/", function(req, res) {
       res.status(201).send();
     });
 
-  //console.log(req.body)
-  // res.status(201).send();
 });
 
-// router.post("/:id/delete", (req, res) => {
-//   res.redirect("");
-// });
 module.exports = router;
 

@@ -6,4 +6,9 @@ router.get('/:id', (req, res) => {
   res.redirect('/');
 });
 
+router.post('/', (req, res) => {
+  req.session.id = req.body.username;
+  res.redirect('/');
+})
+
 module.exports = router;

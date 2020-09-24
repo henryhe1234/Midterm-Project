@@ -1,41 +1,51 @@
-
 </html>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Smart Todos</title>
 
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <link rel="stylesheet" href="/todos_main.css">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<head>
+  <title>Smart Todos</title>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/b0c156b51a.js" crossorigin="anonymous"></script>
-    <!-- external JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <!-- internal JS -->
-  </head>
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/todos_main.css">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Smart Todo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/b0c156b51a.js" crossorigin="anonymous"></script>
+  <!-- external JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <!-- internal JS -->
+</head>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Smart Todo</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        <span> </span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort By
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Sort By
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Watch</a>
@@ -45,41 +55,60 @@
             </div>
           </li>
         </ul>
-      </div>
-      </nav>
-    </header>
-    <div class="landing">
-      <div class="content">
+        <li class="navbar-nav nav-item">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true">Login</a>
+          <ul class="dropdown-menu dropdown-menu-right form-wrapper">
+            <li>
+              <form action="/login" method="POST">
+                <div class="form-group">
+                  <label for="username"></label>
+                  <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" placeholder="Password">
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" value="Login">
+              </form>
+            </li>
+          </ul>
+        </li>
+        <form method="POST" action="/logout">
+          <button id='logoutbtn' class="btn-logout btn btn-primary" type="submit">Logout</button>
+        </form>
+    </nav>
+  </header>
+  <div class="landing">
+    <div class="content">
       <h2>Smart Todo List</h2>
       <form id="new-todo">
         <label>What do you have to do?</label>
         <input type="text" class="form-control" name="new-todo">
         <button type="submit" class="btn btn-light" id="todos-btn">Submit</button>
       </form>
+    </div>
+  </div>
+  <div class="todos-container">
+    <div class="">
+      <h1>Watch</h1>
+      <div class="movie lists">
       </div>
     </div>
-    <div class="todos-container">
-      <div class="">
-        <h1>Watch</h1>
-        <div class="movie lists">
-        </div>
-      </div>
-      <div class="">
-        <h1>Eat</h1>
-        <div class="food lists">
-        </div>
-      </div>
-      <div>
-        <h1>Read</h1>
-        <div class="book lists">
-        </div>
-      </div>
-      <div>
-        <h1>Buy</h1>
-        <div class="product lists">
-        </div>
+    <div class="">
+      <h1>Eat</h1>
+      <div class="food lists">
       </div>
     </div>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-  </body>
+    <div>
+      <h1>Read</h1>
+      <div class="book lists">
+      </div>
+    </div>
+    <div>
+      <h1>Buy</h1>
+      <div class="product lists">
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+</body>
 </html>

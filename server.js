@@ -45,10 +45,6 @@ app.use(cookieSession({
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 
-// Fake Data handling
-// const fakeDB = require("./routes/fake_data/in_memory_db");
-// const dataHelpers = require("./routes/fake_data/DataHelpers");
-
 // Todo Routes
 
 const todosRoutes = require("./routes/todos");
@@ -61,9 +57,6 @@ const registry = require("./routes/registry");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-// app.use("/api/users", usersRoutes(db));
-// app.use("/api/widgets", widgetsRoutes(db));
-// app.use("/todos", todosRoutes(db));
 app.use("/todos", todosRoutes);
 app.use("/login", login);
 app.use("/registry",registry);
@@ -72,16 +65,8 @@ app.use("/registry",registry);
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-// app.get("/", (req, res) => {
-//   // addRestaurant(1,'random','2020-08-02','2020-08-03','2020-09-03','restaurant')
-//   // .then((info)=>{
-//   //   res.json(info);
-//   // });
-//   // res.render("index");
 
-// });
-
-//for to be implemented logout button. Wipes cookie.
+//for logout button. Wipes cookie.
 app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
