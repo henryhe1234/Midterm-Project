@@ -95,6 +95,11 @@ $(() => {
         const $book = $('.book');
         console.log(JSON.parse(todo["info"]));
         const data = JSON.parse(todo["info"]);
+        if(data["categories"] === undefined) {
+          category = 'Unlisted'
+        } else {
+          category = data["categories"][0]
+        }
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#book${item}">
     ${data["title"]}</button></p>
@@ -110,7 +115,7 @@ $(() => {
       </div>
       <div class="modal-body">
       <p>Authors: ${data["authors"][0]}</p>
-      <p>Genre: ${data["categories"][0]}</p>
+      <p>Genre: ${category}</p>
       <p>Publisher: ${data["publisher"]}</p>
       <p>Rating: ${data["averageRating"]} / 5</p>
       </div>
