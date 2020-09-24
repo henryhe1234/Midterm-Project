@@ -25,14 +25,14 @@ $(() => {
   const renderTodos = (todos) => {
     const $lists = $('.lists');
     $lists.empty();
-    console.log("TODOS", todos)
+    console.log("TODOS", todos);
     for (const item in todos) {
-      console.log("ITEM", item)
+      console.log("ITEM", item);
       const todo = todos[item];
       if (todo.category === "movie") {
         const $movie = $('.movie');
-        data = JSON.parse(todo["info"])
-        console.log(todo)
+        const data = JSON.parse(todo["info"]);
+        console.log(todo);
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movie${item}">
         ${data["Title"]}</button></p>
@@ -57,13 +57,13 @@ $(() => {
           </div>
         </div>
       </div>
-`)
+`);
         $movie.prepend($content);
       }
       if (todo.category === "restaurant") {
         const $food = $('.food');
-        data = JSON.parse(todo["info"])
-        console.log(JSON.parse(todo["info"]))
+        const data = JSON.parse(todo["info"]);
+        console.log(JSON.parse(todo["info"]));
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#food${item}">
     ${data["name"]}</button></p>
@@ -93,8 +93,8 @@ $(() => {
       }
       if (todo.category === "book") {
         const $book = $('.book');
-        console.log(JSON.parse(todo["info"]))
-        data = JSON.parse(todo["info"])
+        console.log(JSON.parse(todo["info"]));
+        const data = JSON.parse(todo["info"]);
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#book${item}">
     ${data["title"]}</button></p>
@@ -125,19 +125,19 @@ $(() => {
         const $product = $('.product');
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#product${item}">
-    ${elem["title"]}</button></p>
+    ${item["title"]}</button></p>
 <div class="modal fade" id="product${item}" tabindex="-1" role="dialog" aria-labelledby="productLabel${item}"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">${elem["title"]}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">${item["title"]}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      <p>Find on Amazon: <a href=https://www.amazon.ca/s?k=${elem["title"]}>${elem["title"]}</a>
+      <p>Find on Amazon: <a href=https://www.amazon.ca/s?k=${item["title"]}>${item["title"]}</a>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
