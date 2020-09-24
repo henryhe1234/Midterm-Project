@@ -5,6 +5,7 @@ const router = express.Router();
 const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUserId, editScheduled_dateByUserIdAndTitle, editCompleted_dateByUserIdAndTitle, deleteTaskItemByUserIdAndTitle,changeCatagoryByUserIdAndTitle } = require("../db/database");
 const taskSort = require("../lib/taskSort");
 const db = require('../db/dbsetup');
+const { route } = require('./login');
 
 
 router.get("/", (req, res) => {
@@ -44,5 +45,20 @@ router.post("/", function(req, res) {
 
 });
 
+router.post("/edit",(req,res)=>{
+  let user_id = req.session.id;
+  let title = req.body;
+  let newCatagory = req.body["new-catagory"];
+  changeCatagoryByUserIdAndTitle(user_id,title,newCatagory)
+  .then(()=>{
+    res.status(201).send();
+  })
+
+
+})
+
+// router.post("/:id/delete", (req, res) => {
+//   res.redirect("");
+// });
 module.exports = router;
 
