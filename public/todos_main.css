@@ -58,3 +58,16 @@ input{
   overflow: hidden;
   padding: 4rem 1rem;
 }
+#navbarSupportedContent > li > ul {
+  padding: 10px;
+}
+
+#navbarSupportedContent > form {
+  display: none;
+}
+
+.popout{
+  display: none;
+}
+
+
