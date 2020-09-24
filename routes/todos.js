@@ -2,23 +2,30 @@
 // const { Template } = require('ejs');
 const express = require('express');
 const router = express.Router();
-const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUserId, editScheduled_dateByUserIdAndTitle, editCompleted_dateByUserIdAndTitle, deleteTaskItemByUserIdAndTitle } = require("../db/database");
+const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUserId, editScheduled_dateByUserIdAndTitle, editCompleted_dateByUserIdAndTitle, deleteTaskItemByUserIdAndTitle,changeCatagoryByUserIdAndTitle } = require("../db/database");
 const taskSort = require("../lib/taskSort");
-const db = require('../db/dbsetup')
+const db = require('../db/dbsetup');
+
 
 router.get("/", (req, res) => {
 
-  let user_id = req.session.id;
+  const user_id = req.session.id;
   getItemsListByUserId(user_id)
     .then((todos) => {
-      console.log(todos);
-      const templateVars = { todos: todos };
-      res.render('todos', templateVars);
-    })
+      res.json(todos);
+    });
 });
 
+// router.get("/test",(req,res)=>{
+//   changeCatagoryByUserIdAndTitle(2,'Harry Potter','movie')
+//   .then((obj)=>{
+//     res.json(obj);
+//   })
+
+// })
+
 router.get("/list", (req, res) => {
-  let query = `SELECT * FROM task_items`;
+  let query = `SELECT * FROM s`;
   console.log(query);
   db.query(query)
     .then(data => {
@@ -32,19 +39,21 @@ router.get("/list", (req, res) => {
     });
 });
 
-router.post("/", function (req, res) {
-  console.log("REQ:\n", req.body["new-todo"])
+router.post("/", function(req, res) {
+  console.log("REQ:\n", req.body["new-todo"]);
   if (!req.body["new-todo"]) {
     res.status(400).json({ error: 'invalid request: no data in POST body' });
     return;
   }
-  taskSort(req.body["new-todo"], req.session.id)
+  taskSort(req.body["new-todo"], req.session.id);
+  res.status(201).send();
+
   //console.log(req.body)
-  res.redirect("/")
+  // res.status(201).send();
 });
 
 // router.post("/:id/delete", (req, res) => {
-//   res.redirect("/todos");
+//   res.redirect("");
 // });
 module.exports = router;
 
