@@ -6,13 +6,13 @@ const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUs
 const taskSort = require("../lib/taskSort");
 const db = require('../db/dbsetup');
 
+
 router.get("/", (req, res) => {
 
   const user_id = req.session.id;
   getItemsListByUserId(user_id)
     .then((todos) => {
-      const templateVars = { todos: todos };
-      res.render('todos', templateVars);
+      res.json(todos);
     });
 });
 
@@ -46,12 +46,14 @@ router.post("/", function(req, res) {
     return;
   }
   taskSort(req.body["new-todo"], req.session.id);
+  res.status(201).send();
+
   //console.log(req.body)
-  res.redirect("/");
+  // res.status(201).send();
 });
 
 // router.post("/:id/delete", (req, res) => {
-//   res.redirect("/todos");
+//   res.redirect("");
 // });
 module.exports = router;
 
