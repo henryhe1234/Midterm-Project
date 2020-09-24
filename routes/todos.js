@@ -52,8 +52,17 @@ router.post("/edit",(req,res)=>{
   changeCatagoryByUserIdAndTitle(user_id,title,newCatagory)
   .then(()=>{
     res.status(201).send();
-  })
+  });
 
+
+});
+router.post("/delete",(req,res)=>{
+  let user_id = req.session.id;
+  let title = req.body[""];
+  deleteTaskItemByUserIdAndTitle(usere_id,title)
+  .then(()=>{
+    res.redirect('/');
+  })
 
 })
 
