@@ -1,4 +1,3 @@
-
 $(() => {
   // $.ajax({
   //   method: "GET",
@@ -25,14 +24,14 @@ $(() => {
   const renderTodos = (todos) => {
     const $lists = $('.lists');
     $lists.empty();
-    console.log("TODOS", todos);
+    console.log("TODOS", todos["id"]);
     for (const item in todos) {
-      console.log("ITEM", item);
+      console.log("ITEM", todos[item]);
       const todo = todos[item];
       if (todo.category === "movie") {
         const $movie = $('.movie');
         const data = JSON.parse(todo["info"]);
-        console.log(todo);
+        //console.log(todo);
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movie${item}">
         ${data["Title"]}</button></p>
@@ -41,7 +40,7 @@ $(() => {
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">${data["Title"]}</h5>
+            <h5 class="modal-title" id="example">${data["Title"]}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -63,7 +62,7 @@ $(() => {
       if (todo.category === "restaurant") {
         const $food = $('.food');
         const data = JSON.parse(todo["info"]);
-        console.log(JSON.parse(todo["info"]));
+        //console.log(JSON.parse(todo["info"]));
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#food${item}">
     ${data["name"]}</button></p>
@@ -93,7 +92,7 @@ $(() => {
       }
       if (todo.category === "book") {
         const $book = $('.book');
-        console.log(JSON.parse(todo["info"]));
+        //console.log(JSON.parse(todo["info"]));
         const data = JSON.parse(todo["info"]);
         if(data["categories"] === undefined) {
           category = 'Unlisted'
@@ -121,6 +120,7 @@ $(() => {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary complete">Complete</button>
       </div>
     </div>
   </div>`);
@@ -171,6 +171,11 @@ $(() => {
   //   event.preventDefault()
   //   $(this).hide()
   // })
+  $(document).on('click', '.complete', function() {
+    console.log("THIS WORK?",$(this).parent())
+    console.log(this)
+    //$.delete('/todos')
+  })
 
   loadTodos();
 });
