@@ -49,7 +49,7 @@ $(() => {
       }
     }
 
-  };+
+  };
   const $newTodo = $('#new-todo');
 
   $newTodo.on('submit', function(event) {

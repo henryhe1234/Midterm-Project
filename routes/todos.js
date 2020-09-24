@@ -45,8 +45,11 @@ router.post("/", function(req, res) {
     res.status(400).json({ error: 'invalid request: no data in POST body' });
     return;
   }
-  taskSort(req.body["new-todo"], req.session.id);
-  res.status(201).send();
+  taskSort(req.body["new-todo"], req.session.id)
+    .then(()=>{
+
+      res.status(201).send();
+    });
 
   //console.log(req.body)
   // res.status(201).send();
