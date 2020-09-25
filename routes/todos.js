@@ -53,14 +53,16 @@ router.post('/delete', function(req, res) {
 })
 
 router.post("/edit",(req,res)=>{
-  console.log(req.params );
-  // let user_id = req.session.id;
-  // let title = req.body;
-  // let newCatagory = req.body["new-catagory"];
-  // changeCatagoryByUserIdAndTitle(user_id,title,newCatagory)
-  // .then(()=>{
-    res.status(201).send();
-  // })
+  let titleCategory = req.body["category"].split("!");
+  console.log(titleCategory);
+  let user_id = req.session.id;
+  let title = titleCategory[0];
+  let newCatagory = titleCategory[1]
+  changeCatagoryByUserIdAndTitle(user_id,title,newCatagory)
+  .then(()=>{
+    // res.status(201).send();
+    res.redirect('/');
+  })
 
 
 })

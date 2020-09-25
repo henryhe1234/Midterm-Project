@@ -11,10 +11,10 @@ $(() => {
       {
         method: "GET",
         url: "/todos",
-        success: function(todos) {
+        success: function (todos) {
           renderTodos(todos);
         },
-        error: function(error) {
+        error: function (error) {
           console.log("ERROR IN RENDER: ", error);
         }
       }
@@ -60,12 +60,31 @@ $(() => {
       </div>
 `);
         $movie.prepend($content);
+        const $cagagoryButton = $(`
+        <form Method = "POST" action="/todos/edit">
+        <input type="radio" id="book"  name="category" value="${todos[item]["title"]}!book">
+        <label for="book">book</label><br>
+        <input type="radio" id="restaurant" name="category" value="${todos[item]["title"]}!restaurant">
+        <label for="restaurant">restaurant</label><br>
+        <input type="radio" id="movie" name="category" value="${todos[item]["title"]}!movie">
+        <label for="movie">movie</label>
+        <input type="radio" id="product" name="category" value="${todos[item]["title"]}!product">
+        <label for="product">product</label>
+        <input type="submit" value="Submit">
+        </form>
+        `)
+        $movie.prepend($cagagoryButton);
       }
       if (todo.category === "restaurant") {
         console.log(item);
         const $food = $('.food');
         const data = JSON.parse(todo["info"]);
         //console.log(JSON.parse(todo["info"]));
+        if(data["categories"] === undefined){
+          const cuisine = 'Unknown'
+        } else {
+          const cuisine = data["categories"][0]["title"]
+        }
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#food${todos[item]["id"]}">
     ${data["name"]}</button></p>
@@ -80,7 +99,7 @@ $(() => {
         </button>
       </div>
       <div class="modal-body">
-      <p>Cuisine: ${data["categories"][0]["title"]}</p>
+      <p>Cuisine: ${cuisine}</p>
       <p>Address: ${data["location"]["display_address"][0]}\n${data["location"]["display_address"][1]}</p>
       <p></p>
       <p>Price: ${data["price"]}</p>
@@ -92,6 +111,21 @@ $(() => {
   </div>
         `);
         $food.prepend($content);
+        const $cagagoryButton = $(`
+        <form Method = "POST" action="/todos/edit">
+        <input type="radio" id="book"  name="category" value="${todos[item]["title"]}!book">
+        <label for="book">book</label><br>
+        <input type="radio" id="restaurant" name="category" value="${todos[item]["title"]}!restaurant">
+        <label for="restaurant">restaurant</label><br>
+        <input type="radio" id="movie" name="category" value="${todos[item]["title"]}!movie">
+        <label for="movie">movie</label>
+        <input type="radio" id="product" name="category" value="${todos[item]["title"]}!product">
+        <label for="product">product</label>
+        <input type="submit" value="Submit">
+        </form>
+        `)
+        $food.prepend($cagagoryButton);
+
       }
       if (todo.category === "book") {
         const $book = $('.book');
@@ -101,6 +135,11 @@ $(() => {
           category = 'Unlisted'
         } else {
           category = data["categories"][0]
+        }
+        if(data["authors"] === undefined){
+          author = 'Unknown'
+        } else {
+          author = data["authors"][0]
         }
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#book${todos[item]["id"]}">
@@ -116,7 +155,7 @@ $(() => {
         </button>
       </div>
       <div class="modal-body">
-      <p>Authors: ${data["authors"][0]}</p>
+      <p>Authors: ${author}</p>
       <p>Genre: ${category}</p>
       <p>Publisher: ${data["publisher"]}</p>
       <p>Rating: ${data["averageRating"]} / 5</p>
@@ -124,10 +163,25 @@ $(() => {
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-secondary complete" id='${todos[item]["id"]}'>Complete</button>
+
       </div>
     </div>
   </div>`);
         $book.prepend($content);
+        const $cagagoryButton = $(`
+        <form Method = "POST" action="/todos/edit">
+        <input type="radio" id="book"  name="category" value="${todos[item]["title"]}!book">
+        <label for="book">book</label><br>
+        <input type="radio" id="restaurant" name="category" value="${todos[item]["title"]}!restaurant">
+        <label for="restaurant">restaurant</label><br>
+        <input type="radio" id="movie" name="category" value="${todos[item]["title"]}!movie">
+        <label for="movie">movie</label>
+        <input type="radio" id="product" name="category" value="${todos[item]["title"]}!product">
+        <label for="product">product</label>
+        <input type="submit" value="Submit">
+        </form>
+        `)
+        $book.prepend($cagagoryButton);
       }
       if (todo.category === "product ") {
         const $product = $('.product');
@@ -159,7 +213,7 @@ $(() => {
 
   const $newTodo = $('#new-todo');
 
-  $newTodo.on('submit', function(event) {
+  $newTodo.on('submit', function (event) {
     event.preventDefault();
     const serializedData = $(this).serialize();
     console.log("SD:", serializedData)
@@ -175,9 +229,12 @@ $(() => {
   //   event.preventDefault()
   //   $(this).hide()#\31 5
   // })
-  $(document).on('click', '.complete', function() {
+  $(document).on('click', '.complete', function () {
     //console.log("THIS WORK?", this.id)
-    $.post('/todos/delete', { taskId:this.id} )
+    $.post('/todos/delete', { taskId: this.id })
+      .then(() => {
+        loadTodos();
+      });
   })
 
   loadTodos();

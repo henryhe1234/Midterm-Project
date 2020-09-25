@@ -71,11 +71,7 @@ const addProduct = (user_id, title, create_on, scheduled_date, completed_date, p
 
 const getItemsListByUserId = (userId) => {
   return pool.query(`
-<<<<<<< HEAD
-  SELECT task_items.id,title,create_on,category,scheduled_date,completed_date,info
-=======
   SELECT task_items.id,title,create_on,category,scheduled_date,completed_date,info, is_active
->>>>>>> 982727e38274858e6973b5ebd48dac50fa5db6e3
   FROM task_items
   JOIN users ON users.id = user_id
   WHERE user_id = $1 AND is_active = true
@@ -136,6 +132,7 @@ const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
     `,[res,user_id,title])
     })
     .then((res)=>{
+      console.log(res.rows[0]);
       return res.rows[0];
     })
   }else if(newCatagory === 'restaurant'){
