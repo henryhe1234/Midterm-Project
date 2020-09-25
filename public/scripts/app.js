@@ -82,7 +82,6 @@ $(() => {
       if (todo.category === "restaurant") {
         const $food = $('.food');
         const data = JSON.parse(todo["info"]);
-        console.log(JSON.parse(todo["info"]));
         if (data["categories"] === undefined) {
           cuisine = 'Unknown';
         } else {

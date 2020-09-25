@@ -58,6 +58,7 @@ const addRestaurant = (user_id, title, create_on, scheduled_date, completed_date
 };
 
 const addProduct = (user_id, title, create_on, scheduled_date, completed_date, product) => {
+  console.log("ADDING PRODUCT")
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
     category,scheduled_date,completed_date,info)
@@ -159,7 +160,7 @@ const changeCategory = (userId, title, category)=>{
           ,info = $1
       WHERE user_id = $2 AND title = $3
       RETURNING *;
-      `,[res,userId,title])
+      `,[res, userId, title])
       })
       .then((res)=>{
         return res.rows[0];
@@ -170,7 +171,7 @@ const changeCategory = (userId, title, category)=>{
     SET category = 'product'
     WHERE user_id = $1 AND title = $2
     RETURNING *;
-    `,[userId,title])
+    `,[userId, title])
     .then((res)=>{
       return res.rows[0];
     })
