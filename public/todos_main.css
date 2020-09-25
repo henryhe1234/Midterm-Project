@@ -67,4 +67,7 @@ input{
   color:black;
 }
 
-
+#radioform {
+  display: flex;
+  justify-content: space-evenly;
+}
