@@ -31,6 +31,15 @@ router.get("/list", (req, res) => {
     });
 });
 
+router.post('/delete', function(req, res) {
+  console.log("REID", req.session)
+  console.log("REQ", req.body)
+  deleteTaskById(req.session.id, req.body.taskId)
+  .then(()=>{
+    res.status(201).send();
+  });
+})
+
 router.post("/", function(req, res) {
   console.log("REQ:\n", req.body["new-todo"]);
   if (!req.body["new-todo"]) {
