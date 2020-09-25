@@ -1,14 +1,8 @@
 /* global document */
 /* eslint-env jquery */
 $(() => {
-  // $.ajax({
-  //   method: "GET",
-  //   url: "/api/users"
-  // }).done((users) => {
-  //   console.log(users);
-  // });
 
-  ///Load the task list
+  //Loads tasks
   const loadTodos = () => {
     $.ajax(
       {
@@ -214,30 +208,16 @@ $(() => {
       });
   });
 
+  //Changes category via radio buttons
   $(document).on('change', '[type="radio"]', function() {
     let title = $(this).closest('span').attr('class')
-    //$('[data-dismiss="modal"]')
-    console.log($('[data-dismiss="modal"]'))
+    console.log()
     $.post('/todos/edit', { category:$(this).val(), title})
-      .then(response => loadTodos())
+      .then(response => {
+        location.reload()
+        loadTodos()})
   })
-
 
   //Calls tasks on first page load
   loadTodos();
 });
-
-//$movie.prepend($content);
-// const $cagagoryButton = $(`
-// <form Method = "POST" action="/todos/edit">
-// <input type="radio" id="book"  name="category" value="${todos[item]["title"]}!book">
-// <label for="book">book</label><br>
-// <input type="radio" id="restaurant" name="category" value="${todos[item]["title"]}!restaurant">
-// <label for="restaurant">restaurant</label><br>
-// <input type="radio" id="movie" name="category" value="${todos[item]["title"]}!movie">
-// <label for="movie">movie</label>
-// <input type="radio" id="product" name="category" value="${todos[item]["title"]}!product">
-// <label for="product">product</label>
-// <input type="submit" value="Submit">
-// </form>
-// `)
