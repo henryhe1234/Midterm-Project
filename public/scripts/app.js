@@ -8,10 +8,10 @@ $(() => {
       {
         method: "GET",
         url: "/todos",
-        success: function (todos) {
+        success: function(todos) {
           renderTodos(todos);
         },
-        error: function (error) {
+        error: function(error) {
           console.log("ERROR IN RENDER: ", error);
         }
       }
@@ -37,7 +37,7 @@ $(() => {
       <input class="form-check-input" type="radio" name="radio" id="productRadios4" value="product">
       <label class="form-check-label" for="productRadios4">Product</label>
     </div>
-  </form>`
+  </form>`;
 
   //Generate tasks from database
   const renderTodos = (todos) => {
@@ -156,22 +156,22 @@ $(() => {
           `);
         $book.prepend($content);
       }
-      if (todo.category === "product ") {
+      if (todo.category === "product") {
         const $product = $('.product');
         const $content = $(`
-        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#product${todos[item]["id"]}">${item["title"]}</button></p>
+        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#product${todos[item]["id"]}">${todos[item]["title"]}</button></p>
         <div class="modal fade" id="product${todos[item]["id"]}" tabindex="-1" role="dialog" aria-labelledby="productLabel${todos[item]["id"]}"
           aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">${item["title"]}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">${todos[item]["title"]}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <p>Find on Amazon: <a href=https://www.amazon.ca/s?k=${item["title"]}>${item["title"]}</a>
+                <p>Find on Amazon: <a href=https://www.amazon.ca/s?k=${todos[item]["title"]}>${todos[item]["title"]}</a>
                 <span class="${todos[item]["title"]}">${radioArr}</span>
               </div>
               <div class="modal-footer">
@@ -188,7 +188,7 @@ $(() => {
 
   //Adds a new task to the list
   const $newTodo = $('#new-todo');
-  $newTodo.on('submit', function (event) {
+  $newTodo.on('submit', function(event) {
     event.preventDefault();
     const serializedData = $(this).serialize();
     $(this).children('input').val('');
@@ -200,7 +200,7 @@ $(() => {
   });
 
   //Deletes a completed task
-  $(document).on('click', '.complete', function () {
+  $(document).on('click', '.complete', function() {
     $.post('/todos/delete', { taskId: this.id })
       .then((response) => {
         loadTodos();
@@ -209,13 +209,14 @@ $(() => {
 
   //Changes category via radio buttons
   $(document).on('change', '[type="radio"]', function() {
-    let title = $(this).closest('span').attr('class')
-    console.log()
+    let title = $(this).closest('span').attr('class');
+    console.log();
     $.post('/todos/edit', { category:$(this).val(), title})
       .then(response => {
-        location.reload()
-        loadTodos()})
-  })
+        location.reload();
+        loadTodos();
+      });
+  });
 
   //Calls tasks on first page load
   loadTodos();
