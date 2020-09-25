@@ -71,7 +71,7 @@ const addProduct = (user_id, title, create_on, scheduled_date, completed_date, p
 
 const getItemsListByUserId = (userId) => {
   return pool.query(`
-  SELECT title,create_on,category,scheduled_date,completed_date,info
+  SELECT task_items.id,title,create_on,category,scheduled_date,completed_date,info, is_active
   FROM task_items
   JOIN users ON users.id = user_id
   WHERE user_id = $1 AND is_active = true
@@ -107,13 +107,13 @@ const editCompleted_dateByUserIdAndTitle = (newCompleted_date,user_id,title)=>{
     });
 };
 
-const deleteTaskItemByUserIdAndTitle = (user_id,title)=>{
+const deleteTaskById = (userId, taskId)=>{
   return pool.query(`
   UPDATE task_items
   SET is_active = false
-  WHERE user_id = $1 AND title = $2
+  WHERE user_id = $1 AND id = $2
   RETURNING *;
-  `,[user_id,title])
+  `,[userId,taskId])
     .then((res)=>{
       return res.rows[0];
     });
@@ -184,7 +184,7 @@ module.exports = {
   getItemsListByUserId,
   editScheduled_dateByUserIdAndTitle,
   editCompleted_dateByUserIdAndTitle,
-  deleteTaskItemByUserIdAndTitle,
+  deleteTaskById,
   changeCatagoryByUserIdAndTitle
 };
 
