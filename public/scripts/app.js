@@ -24,7 +24,7 @@ $(() => {
   const renderTodos = (todos) => {
     const $lists = $('.lists');
     $lists.empty();
-    console.log("TODOS", todos["id"]);
+    //console.log("TODOS", todos);
     for (const item in todos) {
       console.log("ITEM", todos[item]);
       const todo = todos[item];
@@ -33,14 +33,14 @@ $(() => {
         const data = JSON.parse(todo["info"]);
         //console.log(todo);
         const $content = $(`
-        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movie${item}">
+        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movie${todos[item]["id"]}">
         ${data["Title"]}</button></p>
-    <div class="modal fade" id="movie${item}" tabindex="-1" role="dialog" aria-labelledby="movieLabel${item}"
+    <div class="modal fade" id="movie${todos[item]["id"]}" tabindex="-1" role="dialog" aria-labelledby="movieLabel${todos[item]["id"]}}"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="example">${data["Title"]}</h5>
+            <h5 class="modal-title" id="example${todos[item]["id"]}">${data["Title"]}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -64,14 +64,14 @@ $(() => {
         const data = JSON.parse(todo["info"]);
         //console.log(JSON.parse(todo["info"]));
         const $content = $(`
-        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#food${item}">
+        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#food${todos[item]["id"]}">
     ${data["name"]}</button></p>
-<div class="modal fade" id="food${item}" tabindex="-1" role="dialog" aria-labelledby="foodLabel${item}"
+<div class="modal fade" id="food${todos[item]["id"]}" tabindex="-1" role="dialog" aria-labelledby="foodLabel${todos[item]["id"]}"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">${data["name"]}</h5>
+        <h5 class="modal-title" id="example${todos[item]["id"]}">${data["name"]}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -100,14 +100,14 @@ $(() => {
           category = data["categories"][0]
         }
         const $content = $(`
-        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#book${item}">
+        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#book${todos[item]["id"]}">
     ${data["title"]}</button></p>
-<div class="modal fade" id="book${item}" tabindex="-1" role="dialog" aria-labelledby="bookLabel${item}"
+<div class="modal fade" id="book${todos[item]["id"]}" tabindex="-1" role="dialog" aria-labelledby="bookLabel${todos[item]["id"]}"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">${data["title"]}</h5>
+        <h5 class="modal-title" id="example${todos[item]["id"]}">${data["title"]}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -120,7 +120,7 @@ $(() => {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-secondary complete">Complete</button>
+        <button type="submit" class="btn btn-secondary complete" id='${todos[item]["id"]}'>Complete</button>
       </div>
     </div>
   </div>`);
@@ -129,14 +129,14 @@ $(() => {
       if (todo.category === "product ") {
         const $product = $('.product');
         const $content = $(`
-        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#product${item}">
+        <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#product${todos[item]["id"]}">
     ${item["title"]}</button></p>
-<div class="modal fade" id="product${item}" tabindex="-1" role="dialog" aria-labelledby="productLabel${item}"
+<div class="modal fade" id="product${todos[item]["id"]}" tabindex="-1" role="dialog" aria-labelledby="productLabel${todos[item]["id"]}"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">${item["title"]}</h5>
+        <h5 class="modal-title" id="example${todos[item]["id"]}">${item["title"]}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -159,6 +159,7 @@ $(() => {
   $newTodo.on('submit', function(event) {
     event.preventDefault();
     const serializedData = $(this).serialize();
+    console.log("SD:", serializedData)
     $(this).children('input').val('');
     $.post('/todos', serializedData)
       .then((response) => {
@@ -169,12 +170,11 @@ $(() => {
 
   // $('#navbarSupportedContent > li').submit(function(event) {
   //   event.preventDefault()
-  //   $(this).hide()
+  //   $(this).hide()#\31 5
   // })
   $(document).on('click', '.complete', function() {
-    console.log("THIS WORK?",$(this).parent())
-    console.log(this)
-    //$.delete('/todos')
+    //console.log("THIS WORK?", this.id)
+    $.post('/todos/delete', { taskId:this.id} )
   })
 
   loadTodos();
