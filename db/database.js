@@ -58,11 +58,7 @@ const addRestaurant = (user_id, title, create_on, scheduled_date, completed_date
 };
 
 const addProduct = (user_id, title, create_on, scheduled_date, completed_date, product) => {
-<<<<<<< HEAD
-  // console.log("ADDING PRODUCT")
-=======
   console.log("ADDING PRODUCT");
->>>>>>> 28e49d35ba3b5070115ddd63a60a061c3e3a076d
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
     category,scheduled_date,completed_date,info)
