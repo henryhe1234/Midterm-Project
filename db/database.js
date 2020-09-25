@@ -71,7 +71,7 @@ const addProduct = (user_id, title, create_on, scheduled_date, completed_date, p
 
 const getItemsListByUserId = (userId) => {
   return pool.query(`
-  SELECT title,create_on,category,scheduled_date,completed_date,info
+  SELECT task_items.id,title,create_on,category,scheduled_date,completed_date,info
   FROM task_items
   JOIN users ON users.id = user_id
   WHERE user_id = $1 AND is_active = true

@@ -26,6 +26,7 @@ $(() => {
     $lists.empty();
     console.log("TODOS", todos["id"]);
     for (const item in todos) {
+      console.log(item + 'hahhaha');
       console.log("ITEM", todos[item]);
       const todo = todos[item];
       if (todo.category === "movie") {
@@ -41,6 +42,7 @@ $(() => {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="example">${data["Title"]}</h5>
+
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -52,6 +54,7 @@ $(() => {
             <p>Reviews: ${data["imdbRating"]}</p>
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Complete</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -60,6 +63,7 @@ $(() => {
         $movie.prepend($content);
       }
       if (todo.category === "restaurant") {
+        console.log(item);
         const $food = $('.food');
         const data = JSON.parse(todo["info"]);
         //console.log(JSON.parse(todo["info"]));
@@ -172,9 +176,13 @@ $(() => {
   //   $(this).hide()
   // })
   $(document).on('click', '.complete', function() {
-    console.log("THIS WORK?",$(this).parent())
-    console.log(this)
+    // console.log("THIS WORK?",$(this).parent().parent().parent().parent());
+    // console.log($(this));
     //$.delete('/todos')
+    const serializedData = $(this).serialize();
+
+    $.post('/todos/edit');
+
   })
 
   loadTodos();
