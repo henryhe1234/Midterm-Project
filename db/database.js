@@ -13,7 +13,7 @@ const addUser = (user) => {
     RETURNING *;
   `, [user.name, user.email, user.password])
     .then((res) => {
-      console.log(res.rows[0]);
+      // console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -26,7 +26,7 @@ const addBooks = (user_id, title, create_on, scheduled_date, completed_date, boo
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, book])
     .then((res) => {
-      console.log(res.rows[0]);
+      // console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -39,7 +39,7 @@ const addMovie = (user_id, title, create_on, scheduled_date, completed_date, mov
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, movie])
     .then((res) => {
-      console.log(res.rows[0]);
+      // console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -66,7 +66,7 @@ const addProduct = (user_id, title, create_on, scheduled_date, completed_date, p
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, product])
     .then((res) => {
-      console.log(res.rows[0]);
+      // console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -81,7 +81,7 @@ const getItemsListByUserId = (userId) => {
 
   `,[userId])
     .then((res)=>{
-      console.log(res.rows);
+      // console.log(res.rows);
       return res.rows;
     });
 };
