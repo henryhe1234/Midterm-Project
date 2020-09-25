@@ -87,6 +87,13 @@ $(() => {
         } else {
           cuisine = data["categories"][0]["title"];
         }
+        if (data["location"] === undefined){
+          street = 'Unknown address'
+          city = 'Unknown city'
+        } else {
+          street = data["location"]["display_address"][0]
+          city = data["location"]["display_address"][1]
+        }
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#food${todos[item]["id"]}">${data["name"]}</button></p>
         <div class="modal fade" id="food${todos[item]["id"]}" tabindex="-1" role="dialog" aria-labelledby="foodLabel${todos[item]["id"]}"
@@ -101,7 +108,7 @@ $(() => {
               </div>
               <div class="modal-body">
                 <p>Cuisine: ${cuisine}</p>
-                <p>Address: ${data["location"]["display_address"][0]}\n${data["location"]["display_address"][1]}</p>
+                <p>Address: ${street}\n${city}</p>
                 <p>Price: ${data["price"]}</p>
                 <span class="${todos[item]["title"]}">${radioArr}</span>
               </div>
