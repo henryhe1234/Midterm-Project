@@ -66,6 +66,7 @@ router.post("/edit", (req, res) => {
   console.log("REQ", req.body)
   changeCategory(req.session.id, req.body.title, req.body.category)
     .then(() => {
+      console.log(res.body);
       res.status(201).send();
     })
 })
