@@ -2,7 +2,7 @@
 // const { Template } = require('ejs');
 const express = require('express');
 const router = express.Router();
-const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUserId, editScheduled_dateByUserIdAndTitle, editCompleted_dateByUserIdAndTitle, deleteTaskItemByUserIdAndTitle,changeCatagoryByUserIdAndTitle } = require("../db/database");
+const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUserId, editScheduled_dateByUserIdAndTitle, editCompleted_dateByUserIdAndTitle, deleteTaskById,changeCatagoryByUserIdAndTitle } = require("../db/database");
 const taskSort = require("../lib/taskSort");
 const db = require('../db/dbsetup');
 const { route } = require('./login');
@@ -39,11 +39,18 @@ router.post("/", function(req, res) {
   }
   taskSort(req.body["new-todo"], req.session.id)
     .then(()=>{
-
       res.status(201).send();
     });
-
 });
+
+router.post('/delete', function(req, res) {
+  // console.log("REID", req.session)
+  // console.log("REQ", req.body)
+  deleteTaskById(req.session.id, req.body.taskId)
+  .then(()=>{
+    res.status(201).send();
+  });
+})
 
 router.post("/edit",(req,res)=>{
   let user_id = req.session.id;
