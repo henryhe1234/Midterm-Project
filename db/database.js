@@ -121,8 +121,8 @@ const deleteTaskById = (userId,taskId)=>{
     });
 };
 
-const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
-  if(newCatagory === 'book'){
+const changeCategory = (userId, title, category)=>{
+  if(category === 'book'){
     return bookQuery(title)
     .then((res)=>{
     return pool.query(`
@@ -131,12 +131,12 @@ const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
         ,info = $1
     WHERE user_id = $2 AND title = $3
     RETURNING *;
-    `,[res,user_id,title])
+    `,[res,userId,title])
     })
     .then((res)=>{
       return res.rows[0];
     })
-  }else if(newCatagory === 'restaurant'){
+  }else if(category === 'restaurant'){
     return restaurantQuery(title)
     .then((res)=>{
     return pool.query(`
@@ -145,12 +145,12 @@ const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
         ,info = $1
     WHERE user_id = $2 AND title = $3
     RETURNING *;
-    `,[res,user_id,title])
+    `,[res,userId,title])
     })
     .then((res)=>{
       return res.rows[0];
     })
-  }else if(newCatagory === 'movie'){
+  }else if(category === 'movie'){
     return movieQuery(title)
     .then((res)=>{
       return pool.query(`
@@ -159,7 +159,7 @@ const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
           ,info = $1
       WHERE user_id = $2 AND title = $3
       RETURNING *;
-      `,[res,user_id,title])
+      `,[res,userId,title])
       })
       .then((res)=>{
         return res.rows[0];
@@ -170,7 +170,7 @@ const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
     SET category = 'product'
     WHERE user_id = $1 AND title = $2
     RETURNING *;
-    `,[user_id,title])
+    `,[userId,title])
     .then((res)=>{
       return res.rows[0];
     })
@@ -187,5 +187,5 @@ module.exports = {
   editScheduled_dateByUserIdAndTitle,
   editCompleted_dateByUserIdAndTitle,
   deleteTaskById,
-  changeCatagoryByUserIdAndTitle
+  changeCategory
 };
