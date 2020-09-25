@@ -12,11 +12,6 @@ const morgan     = require('morgan');
 const cookieSession = require("cookie-session");
 
 // PG database client/connection setup
-const {addRestaurant} = require('./db/database');
-// const { Pool } = require('pg');
-// const dbParams = require('./lib/db.js');
-// const db = new Pool(dbParams);
-// db.connect();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -41,9 +36,6 @@ app.use(cookieSession({
 
 
 // Separated Routes for each Resource
-// Note: Feel free to replace the example routes below with your own
-const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
 
 // Todo Routes
 
@@ -52,19 +44,12 @@ const todosRoutes = require("./routes/todos");
 // Login && Register Routes
 
 const login = require("./routes/login");
-
 const registry = require("./routes/registry");
 
 // Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
 app.use("/todos", todosRoutes);
 app.use("/login", login);
 app.use("/registry",registry);
-
-
-// Home page
-// Warning: avoid creating more routes in this file!
-// Separate them into separate routes files (see above).
 
 //for logout button. Wipes cookie.
 app.post("/logout", (req, res) => {

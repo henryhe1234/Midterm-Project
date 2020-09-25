@@ -1,4 +1,3 @@
-// require('dotenv').config();
 const pool = require('./dbsetup');
 const { movieQuery } = require('../lib/movie_queries');
 const { bookQuery } = require('../lib/book_queries');
@@ -14,6 +13,7 @@ const addUser = (user) => {
     RETURNING *;
   `, [user.name, user.email, user.password])
     .then((res) => {
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -26,6 +26,7 @@ const addBooks = (user_id, title, create_on, scheduled_date, completed_date, boo
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, book])
     .then((res) => {
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -38,7 +39,7 @@ const addMovie = (user_id, title, create_on, scheduled_date, completed_date, mov
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, movie])
     .then((res) => {
-
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
@@ -51,12 +52,13 @@ const addRestaurant = (user_id, title, create_on, scheduled_date, completed_date
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, restaurant])
     .then((res) => {
-
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
 
 const addProduct = (user_id, title, create_on, scheduled_date, completed_date, product) => {
+  console.log("ADDING PRODUCT")
   return pool.query(`
   INSERT INTO task_items (user_id,title,create_on,
     category,scheduled_date,completed_date,info)
@@ -64,14 +66,14 @@ const addProduct = (user_id, title, create_on, scheduled_date, completed_date, p
     RETURNING *;
 `, [user_id, title, create_on, scheduled_date, completed_date, product])
     .then((res) => {
-
+      console.log(res.rows[0]);
       return res.rows[0];
     });
 };
 
 const getItemsListByUserId = (userId) => {
   return pool.query(`
-  SELECT title,create_on,category,scheduled_date,completed_date,info
+  SELECT task_items.id, title,create_on,category,scheduled_date,completed_date,info, is_active
   FROM task_items
   JOIN users ON users.id = user_id
   WHERE user_id = $1 AND is_active = true
@@ -79,6 +81,7 @@ const getItemsListByUserId = (userId) => {
 
   `,[userId])
     .then((res)=>{
+      console.log(res.rows);
       return res.rows;
     });
 };
@@ -107,20 +110,20 @@ const editCompleted_dateByUserIdAndTitle = (newCompleted_date,user_id,title)=>{
     });
 };
 
-const deleteTaskItemByUserIdAndTitle = (user_id,title)=>{
+const deleteTaskById = (userId,taskId)=>{
   return pool.query(`
   UPDATE task_items
   SET is_active = false
-  WHERE user_id = $1 AND title = $2
+  WHERE user_id = $1 AND id = $2
   RETURNING *;
-  `,[user_id,title])
+  `,[userId,taskId])
     .then((res)=>{
       return res.rows[0];
     });
 };
 
-const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
-  if(newCatagory === 'book'){
+const changeCategory = (userId, title, category)=>{
+  if(category === 'book'){
     return bookQuery(title)
     .then((res)=>{
     return pool.query(`
@@ -129,12 +132,12 @@ const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
         ,info = $1
     WHERE user_id = $2 AND title = $3
     RETURNING *;
-    `,[res,user_id,title])
+    `,[res,userId,title])
     })
     .then((res)=>{
       return res.rows[0];
     })
-  }else if(newCatagory === 'restaurant'){
+  }else if(category === 'restaurant'){
     return restaurantQuery(title)
     .then((res)=>{
     return pool.query(`
@@ -143,12 +146,12 @@ const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
         ,info = $1
     WHERE user_id = $2 AND title = $3
     RETURNING *;
-    `,[res,user_id,title])
+    `,[res,userId,title])
     })
     .then((res)=>{
       return res.rows[0];
     })
-  }else if(newCatagory === 'movie'){
+  }else if(category === 'movie'){
     return movieQuery(title)
     .then((res)=>{
       return pool.query(`
@@ -157,7 +160,7 @@ const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
           ,info = $1
       WHERE user_id = $2 AND title = $3
       RETURNING *;
-      `,[res,user_id,title])
+      `,[res, userId, title])
       })
       .then((res)=>{
         return res.rows[0];
@@ -168,7 +171,7 @@ const changeCatagoryByUserIdAndTitle = (user_id,title,newCatagory)=>{
     SET category = 'product'
     WHERE user_id = $1 AND title = $2
     RETURNING *;
-    `,[user_id,title])
+    `,[userId, title])
     .then((res)=>{
       return res.rows[0];
     })
@@ -184,8 +187,6 @@ module.exports = {
   getItemsListByUserId,
   editScheduled_dateByUserIdAndTitle,
   editCompleted_dateByUserIdAndTitle,
-  deleteTaskItemByUserIdAndTitle,
-  changeCatagoryByUserIdAndTitle
+  deleteTaskById,
+  changeCategory
 };
-
-
