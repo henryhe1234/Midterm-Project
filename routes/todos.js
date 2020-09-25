@@ -2,7 +2,7 @@
 // const { Template } = require('ejs');
 const express = require('express');
 const router = express.Router();
-const { addBooks, addMovie, addProduct, addRestaurant, addUser, getItemsListByUserId, editScheduled_dateByUserIdAndTitle, editCompleted_dateByUserIdAndTitle, deleteTaskById,changeCatagoryByUserIdAndTitle } = require("../db/database");
+const { getItemsListByUserId, deleteTaskById, changeCategory } = require("../db/database");
 const taskSort = require("../lib/taskSort");
 const db = require('../db/dbsetup');
 const { route } = require('./login');
@@ -31,45 +31,43 @@ router.get("/list", (req, res) => {
     });
 });
 
-router.post('/delete', function(req, res) {
+router.post('/delete', function (req, res) {
   console.log("REID", req.session)
   console.log("REQ", req.body)
   deleteTaskById(req.session.id, req.body.taskId)
-  .then(()=>{
-    res.status(201).send();
-  });
+    .then(() => {
+      res.status(201).send();
+    });
 })
 
-router.post("/", function(req, res) {
+router.post("/", function (req, res) {
   console.log("REQ:\n", req.body["new-todo"]);
   if (!req.body["new-todo"]) {
     res.status(400).json({ error: 'invalid request: no data in POST body' });
     return;
   }
   taskSort(req.body["new-todo"], req.session.id)
-    .then(()=>{
+    .then(() => {
       res.status(201).send();
     });
 });
 
-router.post('/delete', function(req, res) {
+router.post('/delete', function (req, res) {
   // console.log("REID", req.session)
   // console.log("REQ", req.body)
   deleteTaskById(req.session.id, req.body.taskId)
-  .then(()=>{
-    res.status(201).send();
-  });
+    .then(() => {
+      res.status(201).send();
+    });
 })
 
-router.post("/edit",(req,res)=>{
-  let user_id = req.session.id;
-  let title = req.body;
-  let newCatagory = req.body["new-catagory"];
-  changeCatagoryByUserIdAndTitle(user_id,title,newCatagory)
-  .then(()=>{
-    res.status(201).send();
-  })
-
+router.post("/edit", (req, res) => {
+  console.log("REID", req.session)
+  console.log("REQ", req.body)
+  changeCategory(req.session.id, req.body.title, req.body.category)
+    .then(() => {
+      res.status(201).send();
+    })
 
 })
 
