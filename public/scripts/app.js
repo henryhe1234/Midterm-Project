@@ -24,23 +24,23 @@ $(() => {
   const renderTodos = (todos) => {
     const $lists = $('.lists');
     $lists.empty();
-    //console.log("TODOS", todos);
+    console.log("TODOS", todos)
     for (const item in todos) {
-      console.log("ITEM", todos[item]);
+      console.log("ITEM", item)
       const todo = todos[item];
       if (todo.category === "movie") {
         const $movie = $('.movie');
-        const data = JSON.parse(todo["info"]);
-        //console.log(todo);
+        data = JSON.parse(todo["info"])
+        console.log(todo)
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movie${todos[item]["id"]}">
         ${data["Title"]}</button></p>
-    <div class="modal fade" id="movie${todos[item]["id"]}" tabindex="-1" role="dialog" aria-labelledby="movieLabel${todos[item]["id"]}}"
+    <div class="modal fade" id="movie${todos[item]["id"]}" tabindex="-1" role="dialog" aria-labelledby="movieLabel${todos[item]["id"]}"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="example${todos[item]["id"]}">${data["Title"]}</h5>
+            <h5 class="modal-title" id="exampleModalLabel">${data["Title"]}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -53,16 +53,17 @@ $(() => {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary complete" data-dismiss="modal" id="${todos[item]["id"]}">Complete</button>
           </div>
         </div>
       </div>
-`);
+`)
         $movie.prepend($content);
       }
       if (todo.category === "restaurant") {
         const $food = $('.food');
-        const data = JSON.parse(todo["info"]);
-        //console.log(JSON.parse(todo["info"]));
+        data = JSON.parse(todo["info"])
+        console.log(JSON.parse(todo["info"]))
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#food${todos[item]["id"]}">
     ${data["name"]}</button></p>
@@ -71,7 +72,7 @@ $(() => {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="example${todos[item]["id"]}">${data["name"]}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">${data["name"]}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -84,6 +85,7 @@ $(() => {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary complete" data-dismiss="modal" id="${todos[item]["id"]}">Complete</button>
       </div>
     </div>
   </div>
@@ -92,12 +94,17 @@ $(() => {
       }
       if (todo.category === "book") {
         const $book = $('.book');
-        //console.log(JSON.parse(todo["info"]));
-        const data = JSON.parse(todo["info"]);
+        console.log(JSON.parse(todo["info"]))
+        data = JSON.parse(todo["info"])
         if(data["categories"] === undefined) {
           category = 'Unlisted'
         } else {
           category = data["categories"][0]
+        }
+        if(data["authors"] === undefined){
+          author = 'Unknown'
+        } else {
+          author = data["authors"][0]
         }
         const $content = $(`
         <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#book${todos[item]["id"]}">
@@ -107,20 +114,20 @@ $(() => {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="example${todos[item]["id"]}">${data["title"]}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">${data["title"]}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      <p>Authors: ${data["authors"][0]}</p>
+      <p>Authors: ${author}</p>
       <p>Genre: ${category}</p>
       <p>Publisher: ${data["publisher"]}</p>
       <p>Rating: ${data["averageRating"]} / 5</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-secondary complete" id='${todos[item]["id"]}'>Complete</button>
+        <button type="button" class="btn btn-secondary complete" data-dismiss="modal" id="${todos[item]["id"]}">Complete</button>
       </div>
     </div>
   </div>`);
@@ -136,7 +143,7 @@ $(() => {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="example${todos[item]["id"]}">${item["title"]}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">${item["title"]}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -146,6 +153,7 @@ $(() => {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary complete" data-dismiss="modal" id="${todos[item]["id"]}">Complete</button>
       </div>
     </div>
   </div>`);
@@ -159,7 +167,6 @@ $(() => {
   $newTodo.on('submit', function(event) {
     event.preventDefault();
     const serializedData = $(this).serialize();
-    console.log("SD:", serializedData)
     $(this).children('input').val('');
     $.post('/todos', serializedData)
       .then((response) => {
@@ -170,13 +177,15 @@ $(() => {
 
   // $('#navbarSupportedContent > li').submit(function(event) {
   //   event.preventDefault()
-  //   $(this).hide()#\31 5
+  //   $(this).hide()
   // })
   $(document).on('click', '.complete', function() {
-    //console.log("THIS WORK?", this.id)
+    console.log("THIS WORK?", this.id)
     $.post('/todos/delete', { taskId:this.id} )
+    .then((response) => {
+      loadTodos();
+    });
   })
 
   loadTodos();
 });
-
